@@ -10,7 +10,8 @@ from selenium.common.exceptions import TimeoutException
 BROWSER = None
 
 def pageLoaded():
-    status = BROWSER.execute_script('return document.ready_state;')
+    status = BROWSER.execute_script('return document.readyState;')
+    print(status)
     return status == 'complete'
 
 def sendMsg(userID, message):
@@ -27,14 +28,14 @@ def sendMsg(userID, message):
     password_ipt.send_keys(getpass())
 
     BROWSER.find_element_by_name("login").click()
-
-    while not pageLoaded():
+    while not pageLoaded(): 
         pass
 
-    BROWSER.find_element_by_xpath("//a[@target='_self']")
+    sleep(2)
         
     #Redirect to the message page of the user
     BROWSER.get('http://mbasic.facebook.com/messages/thread/'+ userID)
+    while not pageLoaded(): pass
 
     #Type the message and send it
     message_ipt = BROWSER.find_element_by_id("composerInput")
