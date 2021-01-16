@@ -1,4 +1,4 @@
-import sys
+import sys, os
 sys.path.append('../scripts/')
 
 from selenium.webdriver.chrome.options import Options
@@ -8,6 +8,8 @@ from sendMsg import sendMsg
 
 class SendMsgTest():
     def __init__(self):
+        print(os.environ)
+
         self.crm_options = Options()
         self.crm_options.add_argument('--headless')
         self.crm_options.add_argument('--no-sandbox')
