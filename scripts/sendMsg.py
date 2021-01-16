@@ -1,60 +1,50 @@
+import os, time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from time import sleep
-from getpass import getpass
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.common.exceptions import TimeoutException
 
 BROWSER = None
 
-def pageLoaded():
+def pageLoaded(BROWSER):
+    '''
+        Pour verifier qu'un driver a fini de charger la page...
+            True dans ce cas , sinon False
+    '''
     status = BROWSER.execute_script('return document.readyState;')
     print(status)
     return status == 'complete'
 
-def sendMsg(userID, message):
+
+def sendMsg(BROWSER, userID, message):
+    '''
+        Fonction pour envoyer un message specifique à utilisateur Facebook
+            Elle admet trois parametres, le driver, l'userID (ex: 100000144) et le message en texte.
+    '''
     #Open the BROWSER and go to login page
-    global BROWSER 
-    BROWSER = webdriver.Firefox()
     BROWSER.get('http://mbasic.facebook.com/')
 
     #Login to the fb account
     username_ipt = BROWSER.find_element_by_id("m_login_email")
-    username_ipt.send_keys("")
+    username_ipt.send_keys(os.environ.get("iteam-s_login"))
 
     password_ipt = BROWSER.find_element_by_name("pass")
-    password_ipt.send_keys("")
+    password_ipt.send_keys(os.environ.get("iteam-s_login"))
 
     BROWSER.find_element_by_name("login").click()
-    while not pageLoaded(): 
-        pass
-
-    sleep(1)
-        
+    while not pageLoaded(): time.sleep(0.5)
+  
     #Redirect to the message page of the user
     BROWSER.get('http://mbasic.facebook.com/messages/thread/'+ userID)
     while not pageLoaded(): pass
 
-    #If the user is not a friend
-    # try:
-    #     message_ipt = WebDriverWait(BROWSER, 5).until(EC.presence_of_element_located((By.NAME, "body")))
-    # #If the user is a friend
-    # except:
-    #     message_ipt = WebDriverWait(BROWSER, 5).until(EC.presence_of_element_located((By.ID, "composerInput"))) 
-    # #In the case of error
-    # finally:
-    #     print("Can't find the message input")
-    #     BROWSER.quit()
+    # If the user is not a friend
+    try:
+        message_ipt = WebDriverWait(BROWSER, 5).until(EC.presence_of_element_located((By.NAME, "body")))
+    #If the user is a friend
+    except:
+        message_ipt = WebDriverWait(BROWSER, 5).until(EC.presence_of_element_located((By.ID, "composerInput"))) 
 
-    #If the user is a friend   
-    if EC.presence_of_element_located((By.NAME, "body")): 
-        message_ipt = BROWSER.find_element_by_name("body")
-    # #If the user is not a friend
-    elif EC.presence_of_element_located((By.ID, "composerInput")): 
-        message_ipt = BROWSER.find_element_by_id("composerInput")
-
-    # message_ipt = BROWSER.find_element_by_id("composerInput")
     message_ipt.send_keys(message)
-    BROWSER.find_element_by_name("send").click()
+    BROWSER.find_element_by_name("Send").click()

@@ -1,4 +1,6 @@
 from flask import Flask 
+from scripts.sendMsg import sendMsg
+from scripts.getUserId import getUserId
 
 
 app = Flask(__name__)
