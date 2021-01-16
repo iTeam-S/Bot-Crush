@@ -3,7 +3,14 @@ from bs4 import BeautifulSoup
 
 
 def getUserId(username):
+    '''
+        A partir d'un username du profil facebook, 
+            retourne l'userID sinon None si Not found
+    '''
     r = requests.get("https://mbasic.facebook.com/" + username)
+    
+    if r.status_code == 404:
+        return
 
     src_code = BeautifulSoup(r.text, 'html.parser')
 
