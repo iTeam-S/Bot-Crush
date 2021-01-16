@@ -9,7 +9,7 @@ def getUserId(username):
 
     for balise_a in src_code.find_all('a') :
         link = balise_a.get('href')
-        if link.startswith('/r.php?')
+        if link.startswith('/r.php?'):
             return re.findall(r"[0-9]{15}", link)[0]
 
 
