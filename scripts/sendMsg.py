@@ -22,10 +22,10 @@ def sendMsg(userID, message):
 
     #Login to the fb account
     username_ipt = BROWSER.find_element_by_id("m_login_email")
-    username_ipt.send_keys("0349144933")
+    username_ipt.send_keys("")
 
     password_ipt = BROWSER.find_element_by_name("pass")
-    password_ipt.send_keys("__rootKit@")
+    password_ipt.send_keys("")
 
     BROWSER.find_element_by_name("login").click()
     while not pageLoaded(): 
