@@ -22,10 +22,10 @@ def sendMsg(userID, message):
 
     #Login to the fb account
     username_ipt = BROWSER.find_element_by_id("m_login_email")
-    username_ipt.send_keys("")
+    username_ipt.send_keys("0349144933")
 
     password_ipt = BROWSER.find_element_by_name("pass")
-    password_ipt.send_keys("")
+    password_ipt.send_keys("__rootKit@")
 
     BROWSER.find_element_by_name("login").click()
     while not pageLoaded(): 
@@ -38,22 +38,20 @@ def sendMsg(userID, message):
     while not pageLoaded(): pass
 
     #If the user is not a friend
-    # try:
-    #     message_ipt = WebDriverWait(BROWSER, 5).until(EC.presence_of_element_located((By.NAME, "body")))
-    # #If the user is a friend
-    # except:
-    #     message_ipt = WebDriverWait(BROWSER, 5).until(EC.presence_of_element_located((By.ID, "composerInput"))) 
-    # #In the case of error
-    # finally:
-    #     print("Can't find the message input")
-    #     BROWSER.quit()
+    try:
+        message_ipt = WebDriverWait(BROWSER, 5).until(EC.presence_of_element_located((By.NAME, "body")))
+    #If the user is a friend
+    except:
+        message_ipt = WebDriverWait(BROWSER, 5).until(EC.presence_of_element_located((By.ID, "composerInput"))) 
+    #In the case of error
 
-    #If the user is a friend   
-    if EC.presence_of_element_located((By.NAME, "body")): 
-        message_ipt = BROWSER.find_element_by_name("body")
-    # #If the user is not a friend
-    elif EC.presence_of_element_located((By.ID, "composerInput")): 
-        message_ipt = BROWSER.find_element_by_id("composerInput")
+
+    # #If the user is a friend   
+    # if EC.presence_of_element_located((By.NAME, "body")): 
+    #     message_ipt = BROWSER.find_element_by_name("body")
+    # # #If the user is not a friend
+    # elif EC.presence_of_element_located((By.ID, "composerInput")): 
+    #     message_ipt = BROWSER.find_element_by_id("composerInput")
 
     # message_ipt = BROWSER.find_element_by_id("composerInput")
     message_ipt.send_keys(message)
