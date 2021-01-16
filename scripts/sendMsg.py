@@ -37,13 +37,15 @@ def sendMsg(BROWSER, userID, message):
   
     #Redirect to the message page of the user
     BROWSER.get('http://mbasic.facebook.com/messages/thread/'+ userID)
-    while not pageLoaded(BROWSER): pass
+    while not pageLoaded(BROWSER): time.sleep(0.5)
 
     # If the user is not a friend
     try:
-        message_ipt = WebDriverWait(BROWSER, 5).until(EC.presence_of_element_located((By.NAME, "body")))
+        message_ipt = WebDriverWait(BROWSER, 10).until(EC.presence_of_element_located((By.NAME, "body")))
     #If the user is a friend
     except:
-        message_ipt = WebDriverWait(BROWSER, 5).until(EC.presence_of_element_located((By.ID, "composerInput"))) 
+        message_ipt = WebDriverWait(BROWSER, 10).until(EC.presence_of_element_located((By.ID, "composerInput")))
+    else:
+        print("Can't find input")
     message_ipt.send_keys(message)
     BROWSER.find_element_by_name("Send").click()

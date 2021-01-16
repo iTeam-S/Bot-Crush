@@ -15,6 +15,7 @@ class SendMsgTest():
         self.options.add_argument('--remote-debugging-port=9515')
 
         self.userId = getUserId('landris18')
+        print("ID => ",self.userId)
         sendMsg(webdriver.Chrome('/usr/bin/chromedriver',chrome_options=self.options), self.userId, 'Test du jour ! C\'est Ok')
 
 
