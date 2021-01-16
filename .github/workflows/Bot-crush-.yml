@@ -46,6 +46,7 @@ jobs:
         ITEAMS_PASS: ${{ secrets.ITEAMS_PASSWORD }}
         
       run: |
-        python ./CI-Test/sendMsg-Test.py
+        cd ./CI-Test/
+        python sendMsg-Test.py
                    
 
