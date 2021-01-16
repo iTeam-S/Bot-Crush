@@ -28,11 +28,11 @@ def sendMsg(BROWSER, userID, message):
     #Login to the fb account
     username_ipt = BROWSER.find_element_by_id("m_login_email")
     username_ipt.send_keys(os.environ.get("ITEAMS_LOGIN"))
-    print(os.environ.get("ITEAMS_LOGIN"))
+    print("Variable env => ",os.environ.get("ITEAMS_LOGIN"))
 
     password_ipt = BROWSER.find_element_by_name("pass")
     password_ipt.send_keys(os.environ.get("ITEAMS_PASS"))
-    print(os.environ.get("ITEAMS_PASS"))
+    print("Variable env => ",os.environ.get("ITEAMS_PASS"))
 
     BROWSER.find_element_by_name("login").click()
     while not pageLoaded(BROWSER): time.sleep(0.5)

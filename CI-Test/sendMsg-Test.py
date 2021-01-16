@@ -8,15 +8,15 @@ from sendMsg import sendMsg
 
 class SendMsgTest():
     def __init__(self):
-        self.options = Options()
-        self.options.add_argument('--headless')
-        self.options.add_argument('--no-sandbox')
-        self.options.add_argument('--disable-dev-shm-usage')
-        self.options.add_argument('--remote-debugging-port=9515')
+        self.crm_options = Options()
+        self.crm_options.add_argument('--headless')
+        self.crm_options.add_argument('--no-sandbox')
+        self.crm_options.add_argument('--disable-dev-shm-usage')
+        self.crm_options.add_argument('--remote-debugging-port=9515')
 
         self.userId = getUserId('landris18')
         print("ID => ",self.userId)
-        sendMsg(webdriver.Chrome('/usr/bin/chromedriver',chrome_options=self.options), self.userId, 'Test du jour ! C\'est Ok')
+        sendMsg(webdriver.Chrome('/usr/bin/chromedriver',options=self.crm_options), self.userId, 'Test du jour ! C\'est Ok')
 
 
 if __name__ == "__main__":
