@@ -36,6 +36,4 @@ jobs:
     - name: Test getId function
       run: |
         cd scripts/
-        python -i getId.py
-        getId('arleme.scheck')
-        exit()
+        python -c "import getUserId; userId=getUserId.getUserId('arleme.scheck'); print(userId)"
