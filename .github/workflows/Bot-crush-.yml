@@ -40,12 +40,15 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude app.py,messenger.py,.git,__pycache__,build,dist
         
-    - name: Test getUserId and Send Message function
-      shell: bash
+    - uses: ./env-export
       env:
         ITEAMS_LOGIN : ${{ secrets.ITEAMS_LOGIN }}
         ITEAMS_PASS: ${{ secrets.ITEAMS_PASSWORD }}
-        
+    
+    - name: Print environment with masked secrets
+      run: printenv
+            
+    - name: Test getUserId and Send Message function    
       run: |
         cd ./CI-Test/
         python sendMsg-Test.py
