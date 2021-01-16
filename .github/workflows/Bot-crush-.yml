@@ -6,7 +6,8 @@ name: Bot-crush
 on:
   schedule:
     - cron:  '0 12 */1 * *'
-
+  push:
+    branches: [ main ]
 jobs:
   build:
 
@@ -18,11 +19,21 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
+    - name: Install chrome and chrome-driver
+      run: |
+        apt update -y 
+        apt-get install wget chromium-browser unzip
+        wget https://chromedriver.storage.googleapis.com/87.0.4280.88/chromedriver_linux64.zip
+        unzip chromedriver_linux64.zip
+        mv chromedriver /usr/bin/
+        rm chromedriver_linux64.zip
+      
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         pip install flake8 pytest
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        
     - name: Lint with flake8
       run: |
         # stop the build if there are Python syntax errors or undefined names
@@ -31,6 +42,10 @@ jobs:
         flake8 ./scripts/ --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude .git,__pycache__,build,dist
         
     - name: Test getUserId and Send Message function
+      env:
+        ITEAMS_LOGIN : ${{ secrets.ITEAMS_LOGIN }}
+        ITEAMS_PASS: ${{ secrets.ITEAMS_PASSWORD }}
+        
       run: |
         cd scripts/
         python -c "
