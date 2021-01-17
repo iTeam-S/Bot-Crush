@@ -43,7 +43,7 @@ def sendMsg(BROWSER, userID, message):
     BROWSER.get('http://mbasic.facebook.com/messages/thread/'+ userID)
     
     body = BROWSER.find_element_by_tag_name("body")
-	body.screenshot("./log.png")
+    body.screenshot("./log.png")
     
     while not pageLoaded(BROWSER): time.sleep(0.5)
 
