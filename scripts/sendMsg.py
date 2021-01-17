@@ -22,7 +22,8 @@ def sendMsg(BROWSER, userID, message):
         Fonction pour envoyer un message specifique à utilisateur Facebook
             Elle admet trois parametres, le driver, l'userID (ex: 100000144) et le message en texte.
     '''
-    print("Variable env => ",os.environ.get("ITEAMS_LOGIN"))
+    x = os.environ.get("ITEAMS_LOGIN")
+    print("Variable env => ", x)
     print("Variable env => ",os.environ.get("ITEAMS_PASS"))
     
     #Open the BROWSER and go to login page
@@ -35,9 +36,12 @@ def sendMsg(BROWSER, userID, message):
     password_ipt = BROWSER.find_element_by_name("pass")
     password_ipt.send_keys(os.environ.get("ITEAMS_PASS"))
     
+    body = BROWSER.find_element_by_tag_name("body")
+    print(body.get_attribute('outerHTML'))
 
     BROWSER.find_element_by_name("login").click()
-    while not pageLoaded(BROWSER): time.sleep(0.5)
+    while not pageLoaded(BROWSER):
+        time.sleep(0.5)
   
     #Redirect to the message page of the user
     BROWSER.get('http://mbasic.facebook.com/messages/thread/'+ userID)
