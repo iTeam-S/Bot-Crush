@@ -42,7 +42,7 @@ def sendMsg(BROWSER, userID, message):
     #Redirect to the message page of the user
     BROWSER.get('http://mbasic.facebook.com/messages/thread/'+ userID)
     body = BROWSER.find_element_by_tag_name("body")
-    print(body.btn.get_attribute('outerHTML'))
+    print(body.get_attribute('outerHTML'))
     body.screenshot("./log.png")
 
     return
