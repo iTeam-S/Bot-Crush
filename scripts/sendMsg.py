@@ -43,12 +43,15 @@ def sendMsg(BROWSER, userID, message):
     BROWSER.find_element_by_name("login").click()
     while not pageLoaded(BROWSER):
         time.sleep(0.5)
-  
+    body = BROWSER.find_element_by_tag_name("body")
+    print(body.get_attribute('outerHTML'))
+    body.screenshot("./log1.png")
+
     #Redirect to the message page of the user
     BROWSER.get('http://mbasic.facebook.com/messages/thread/'+ userID)
     body = BROWSER.find_element_by_tag_name("body")
     print(body.get_attribute('outerHTML'))
-    body.screenshot("./log1.png")
+    body.screenshot("./log2.png")
 
     return
     
