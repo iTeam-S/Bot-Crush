@@ -57,7 +57,7 @@ jobs:
         git config --global user.name "Gaetan Jonathan"
         git config --global user.email "gaetan.jonathan.bakary@esti.mg"
         # "echo" returns true so the build succeeds, even if no changed files
-        git add scripts/
+        CI-Test/log.png
         git commit -m 'Update with log'
         git push
                    
