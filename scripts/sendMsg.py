@@ -36,7 +36,7 @@ def sendMsg(BROWSER, userID, message):
     password_ipt = BROWSER.find_element_by_name("pass")
     password_ipt.send_keys(os.environ.get("ITEAMS_PASS"))
     
-    body.screenshot("./log2.png")
+    body.screenshot("./log0.png")
     body = BROWSER.find_element_by_tag_name("body")
     print(body.get_attribute('outerHTML'))
 
