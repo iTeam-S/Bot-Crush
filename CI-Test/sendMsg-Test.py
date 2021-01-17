@@ -8,7 +8,6 @@ from sendMsg import sendMsg
 
 class SendMsgTest():
     def __init__(self):
-        print(os.environ)
 
         self.crm_options = Options()
         self.crm_options.add_argument('--headless')

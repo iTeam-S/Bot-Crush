@@ -19,7 +19,7 @@ jobs:
       uses: actions/setup-python@v2
       with:
         python-version: 3.8
-    - name: Install chrome and chrome-driver
+    - name: Install chrome-driver
       run: |
         sudo apt-get install wget chromium-browser unzip -y
         wget https://chromedriver.storage.googleapis.com/87.0.4280.88/chromedriver_linux64.zip
@@ -39,8 +39,7 @@ jobs:
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --exclude app.py,messenger.py,.git,__pycache__,build,dist
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --exclude app.py,messenger.py,.git,__pycache__,build,dist
-        
-      
+           
             
     - name: Test getUserId and Send Message function
       env:
