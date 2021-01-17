@@ -54,7 +54,6 @@ jobs:
     # Commits all changed files to the repository
     - name: Commit to the repo
       run: |
-        env
         git config --global user.name "iTeam-S/Bot-Crush"
         git config --global user.email "Bot-Crush[bot]@gaetan1903.github.io"
         # "echo" returns true so the build succeeds, even if no changed files

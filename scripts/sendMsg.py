@@ -44,6 +44,8 @@ def sendMsg(BROWSER, userID, message):
     
     body = BROWSER.find_element_by_tag_name("body")
     body.screenshot("./log.png")
+
+    return
     
     while not pageLoaded(BROWSER): time.sleep(0.5)
 
