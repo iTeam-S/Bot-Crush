@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 
+from getUserId import getUserId
 BROWSER = None
 
 def pageLoaded(BROWSER):
@@ -67,3 +68,16 @@ def sendMsg(BROWSER, userID, message):
         print("Can't find input")
     message_ipt.send_keys(message)
     BROWSER.find_element_by_name("Send").click()
+
+
+'''
+    Pour effacer l'historique de message entre le Bot et ces utilisateurs.
+'''
+
+def delete_messages( BROWSER,username):
+    page_id="100142865413064"
+    user_id=getUserId(username)
+    links="https://mbasic.facebook.com/messages/read/?tid=cid.c."+user_id+"%3A"+page_id
+    BROWSER.get(links)
+    BROWSER.find_element_by_name("delete").click()
+    WebDriverWait(driver, 5).until(EC.element_to_be_clickable((By.LINK_TEXT, "Supprimer"))).click()
