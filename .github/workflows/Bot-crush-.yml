@@ -5,7 +5,7 @@ name: Bot-crush
 
 on:
   schedule:
-    - cron:  '* * * */5 *'
+    - cron:  '0 12 20 */5 *'
 jobs:
   build:
 
