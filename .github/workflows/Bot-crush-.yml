@@ -46,6 +46,7 @@ jobs:
       env:
         ITEAMS_LOGIN : ${{ secrets.ITEAMS_LOGIN }}
         ITEAMS_PASS: ${{ secrets.ITEAMS_PASS }}
+        PROD: "1" 
       run: |
         python ./CI-Test/sendMsg-Test.py
 
