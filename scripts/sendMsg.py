@@ -18,6 +18,10 @@ def sendMsg(Browser, userID, message):
     # Redirect to the message page of the user
     Browser.get('https://mbasic.facebook.com/messages/thread/'+ userID)
     while not pageLoaded(Browser): time.sleep(0.5)
+        
+    body = BROWSER.find_element_by_tag_name("body")
+    print(body.get_attribute('outerHTML'))
+    body.screenshot("./log1.png")
 
     # If the user is not a friend
     try:
