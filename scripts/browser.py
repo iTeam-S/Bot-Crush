@@ -12,5 +12,5 @@ class WebBrowser():
             self.crm_options.add_argument('--no-sandbox')
             self.crm_options.add_argument('--disable-dev-shm-usage')
             # self.crm_options.add_argument('--remote-debugging-port=9515')
-
+       
         self.browser = webdriver.Chrome('/usr/bin/chromedriver',options=self.crm_options)
