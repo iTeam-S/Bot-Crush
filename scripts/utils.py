@@ -38,7 +38,7 @@ def connexion(Browser):
 	Browser.get('https://mbasic.facebook.com/')
 	#Login to the fb account
 	username_ipt = Browser.find_element_by_id("m_login_email")
-	username_ipt.send_keys( (os.environ.get("ITEAMS_LOGIN"))
+	username_ipt.send_keys(os.environ.get("ITEAMS_LOGIN"))
 	print("Variable env => ",os.environ.get("ITEAMS_LOGIN"))
 
 	password_ipt = Browser.find_element_by_name("pass")
