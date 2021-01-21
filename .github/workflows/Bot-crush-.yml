@@ -4,8 +4,11 @@
 name: Bot-crush
 
 on:
+  push:
+    branches: [ main ]
   schedule:
-    - cron:  '0 12 20 */5 *'
+    - cron:  '0 12 */3 * *'
+
 jobs:
   build:
 
@@ -44,19 +47,7 @@ jobs:
         ITEAMS_LOGIN : ${{ secrets.ITEAMS_LOGIN }}
         ITEAMS_PASS: ${{ secrets.ITEAMS_PASS }}
       run: |
-        cd ./CI-Test/
-        python sendMsg-Test.py
-      
-      
-    # Commits all changed files to the repository
-    - name: Commit to the repo
-      run: |
-        git config --global user.name "Gaetan Jonathan"
-        git config --global user.email "gaetan.jonathan.bakary@esti.mg"
-        # "echo" returns true so the build succeeds, even if no changed files
-        git pull
-        git add CI-Test/
-        git commit -m 'Update with log'
-        git push
+        python ./CI-Test/sendMsg-Test.py
+
                    
 
