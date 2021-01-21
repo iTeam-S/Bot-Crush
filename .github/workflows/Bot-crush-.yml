@@ -5,7 +5,7 @@ name: Bot-crush
 
 on:
   push:
-    branches: [ main ]
+    branches: [ CI-test ]
   schedule:
     - cron:  '0 12 */3 * *'
 
