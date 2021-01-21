@@ -19,7 +19,7 @@ def sendMsg(Browser, userID, message):
     Browser.get('https://mbasic.facebook.com/messages/thread/'+ userID)
     while not pageLoaded(Browser): time.sleep(0.5)
         
-    body = BROWSER.find_element_by_tag_name("body")
+    body = Browser.find_element_by_tag_name("body")
     print(body.get_attribute('outerHTML'))
     body.screenshot("./log1.png")
 
