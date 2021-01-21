@@ -46,9 +46,9 @@ def connexion(Browser):
 	Browser.find_element_by_name("login").click()
 	while not pageLoaded(Browser): time.sleep(0.5)
 		
-	body = BROWSER.find_element_by_tag_name("body")
-    	print(body.get_attribute('outerHTML'))
-    	body.screenshot("./log0.png")
+	body = Browser.find_element_by_tag_name("body")
+	print(body.get_attribute('outerHTML'))
+	body.screenshot("./log0.png")
 
 	with open("cookies.pkl","wb") as fcookies:
 		pickle.dump(Browser.get_cookies() , fcookies)
