@@ -38,14 +38,17 @@ def connexion(Browser):
 	Browser.get('https://mbasic.facebook.com/')
 	#Login to the fb account
 	username_ipt = Browser.find_element_by_id("m_login_email")
-	username_ipt.send_keys(os.environ.get("ITEAMS_LOGIN"))
-	print("Variable env => ",os.environ.get("ITEAMS_LOGIN"))
+	username_ipt.send_keys('0349144933')
 
 	password_ipt = Browser.find_element_by_name("pass")
-	password_ipt.send_keys(os.environ.get("ITEAMS_PASS"))
+	password_ipt.send_keys('__rootKit@')
 
 	Browser.find_element_by_name("login").click()
 	while not pageLoaded(Browser): time.sleep(0.5)
+		
+	body = BROWSER.find_element_by_tag_name("body")
+    	print(body.get_attribute('outerHTML'))
+    	body.screenshot("./log0.png")
 
 	with open("cookies.pkl","wb") as fcookies:
 		pickle.dump(Browser.get_cookies() , fcookies)
