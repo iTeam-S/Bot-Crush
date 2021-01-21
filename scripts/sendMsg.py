@@ -4,35 +4,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-
-Browser = None
-
-def pageLoaded(Browser):
-    '''
-        Pour verifier qu'un driver a fini de charger la page...
-            True dans ce cas , sinon False
-    '''
-    status = Browser.execute_script('return document.readyState;')
-    print(status)
-    return status == 'complete'
-
-def connexion(Browser):
-
-    #Login to the fb account
-    username_ipt = Browser.find_element_by_id("m_login_email")
-    username_ipt.send_keys(os.environ.get("ITEAMS_LOGIN"))
-    print("Variable env => ",os.environ.get("ITEAMS_LOGIN"))
-
-    password_ipt = Browser.find_element_by_name("pass")
-    password_ipt.send_keys(os.environ.get("ITEAMS_PASS"))
-    print("Variable env => ",os.environ.get("ITEAMS_PASS"))
-
-    Browser.find_element_by_name("login").click()
-
-    while not pageLoaded(Browser): time.sleep(0.5)
-    
-    with open("cookies.pkl","wb") as fcookies:
-        pickle.dump(Browser.get_cookies() , fcookies)
+from scripts.utils import connexion, pageLoaded
 
 
 def sendMsg(Browser, userID, message):
@@ -40,24 +12,12 @@ def sendMsg(Browser, userID, message):
         Fonction pour envoyer un message specifique à utilisateur Facebook
             Elle admet trois parametres, le driver, l'userID (ex: 100000144) et le message en texte.
     '''
-    Browser.get('https://mbasic.facebook.com/')
-    while not pageLoaded(Browser): time.sleep(0.5)
+    # Connecter le driver à Facebook
+    connexion(Browser)
 
-    if os.path.isfile('cookies.pkl'):
-        with open("cookies.pkl", "rb") as fcookies:
-            cookies = pickle.load(fcookies)
-            for cookie in cookies:
-                Browser.add_cookie(cookie)
-
-    else: connexion(Browser)
-    #Redirect to the message page of the user
+    # Redirect to the message page of the user
     Browser.get('https://mbasic.facebook.com/messages/thread/'+ userID)
     while not pageLoaded(Browser): time.sleep(0.5)
-
-    if 'login.php' in Browser.current_url: 
-        connexion(Browser)
-        Browser.get('https://mbasic.facebook.com/messages/thread/'+ userID)
-        while not pageLoaded(Browser): time.sleep(0.5)
 
     # If the user is not a friend
     try:
