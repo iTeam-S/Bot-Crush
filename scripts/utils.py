@@ -1,6 +1,5 @@
 import os, time, pickle
 
-
 def pageLoaded(Browser):
 	'''
 	    Pour verifier qu'un driver a fini de charger la page...
@@ -49,5 +48,4 @@ def connexion(Browser):
 
 	with open("cookies.pkl","wb") as fcookies:
 		pickle.dump(Browser.get_cookies() , fcookies)
-
 

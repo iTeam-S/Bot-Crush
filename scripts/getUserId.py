@@ -1,4 +1,4 @@
-import requests, re
+import requests,re
 from browser import WebBrowser
 from bs4 import BeautifulSoup
 from utils import *
@@ -33,3 +33,5 @@ def getUserId(username):
         if link.startswith('/r.php?') or 'profile_id' in link:
             res = re.findall(r"1000[0-9]{11}", link)
             if len(res) > 0: return res[0]
+
+
