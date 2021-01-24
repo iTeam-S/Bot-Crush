@@ -5,7 +5,6 @@ from selenium import webdriver
 
 class WebBrowser():
     def __init__(self):
-
         self.crm_options = Options()
         if os.environ.get('PROD'):
             self.crm_options.add_argument('--headless')

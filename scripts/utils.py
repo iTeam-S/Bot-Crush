@@ -1,5 +1,7 @@
 import os, time, pickle
 
+
+#from messenger import Messenger
 def pageLoaded(Browser):
 	'''
 	    Pour verifier qu'un driver a fini de charger la page...
@@ -7,8 +9,6 @@ def pageLoaded(Browser):
 	'''
 	status = Browser.execute_script('return document.readyState;')
 	return status == 'complete'
-
-
 def connexion(Browser):
 	'''
 		fonction de connexion pour le driver donnee en parametre
@@ -48,4 +48,5 @@ def connexion(Browser):
 
 	with open("cookies.pkl","wb") as fcookies:
 		pickle.dump(Browser.get_cookies() , fcookies)
+
 

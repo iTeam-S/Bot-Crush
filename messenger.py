@@ -1,7 +1,5 @@
 import requests
 
-
-
 class Messenger:
     def __init__(self, access_token):
         self.token = access_token
@@ -108,3 +106,9 @@ class Messenger:
         params = {"access_token" : self.token}
 
         return requests.post(self.url + '/messages', json=dataJSON, headers=header, params=params)
+
+    #Récuperer le genre de l'utilisateur
+    def get_gender(self,userID):
+        gender=1
+        links="https://graph.facebook.com/"+userID+"?fields=gender&access_token="+self.token
+        return gender
