@@ -3,7 +3,6 @@ from random import randint
 import mysql.connector
 from getUserId import getUserId
 from datetime import datetime 
-import sys
 from requete import Requete
 def insert_user(username):
 	id_fb=getUserId(username)

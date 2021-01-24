@@ -1,5 +1,5 @@
 import os, time, pickle
-
+import hashlib
 
 #from messenger import Messenger
 def pageLoaded(Browser):
@@ -49,4 +49,8 @@ def connexion(Browser):
 	with open("cookies.pkl","wb") as fcookies:
 		pickle.dump(Browser.get_cookies() , fcookies)
 
-
+#Crypter les données
+def encrypt(string):
+	hash = hashlib.sha3_512()
+	string_crypt = hash.update(string.encode('utf8'))
+	return hash.hexdigest()
