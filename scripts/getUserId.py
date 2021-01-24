@@ -1,7 +1,7 @@
 import requests, re
-from browser import WebBrowser
+from scripts.browser import WebBrowser
 from bs4 import BeautifulSoup
-from utils import *
+from scripts.utils import *
 
 
 def getUserId(username):
