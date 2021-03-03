@@ -1,7 +1,7 @@
 import os, time, pickle
 import hashlib
 
-
+#from messenger import Messenger
 def pageLoaded(Browser):
 	'''
 	    Pour verifier qu'un driver a fini de charger la page...
@@ -9,8 +9,6 @@ def pageLoaded(Browser):
 	'''
 	status = Browser.execute_script('return document.readyState;')
 	return status == 'complete'
-
-
 def connexion(Browser):
 	'''
 		fonction de connexion pour le driver donnee en parametre
@@ -57,5 +55,6 @@ def connexion(Browser):
 		
 def encrypt(string):
 	hash = hashlib.sha224()
+
 	string_crypt = hash.update(string.encode('utf8'))
 	return hash.hexdigest()

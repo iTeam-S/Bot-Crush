@@ -17,12 +17,12 @@ class Requete:
         return self.cursor.fetchone()[0]
 
 
+
     def setAction(self, userID, action):
     	req = '''
     		UPDATE Utilisateur set action = %s
     		WHERE id = %s
     	'''
-    	self.cursor.execute(req, (action, userID))
     	self.db.commit()
 
 

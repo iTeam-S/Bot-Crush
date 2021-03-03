@@ -1,7 +1,5 @@
 import requests
 
-
-
 class Messenger:
     def __init__(self, access_token):
         self.token = access_token

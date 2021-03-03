@@ -1,16 +1,25 @@
 # ********* SECTION IMPORTATION *******
+<<<<<<< HEAD
 import os, random
+=======
+import os
+>>>>>>> refs/remotes/origin/main
 from flask import Flask, request
 from threading import Thread
 
 from scripts.sendMsg import sendMsg
 from scripts.getUserId import getUserId
+<<<<<<< HEAD
 from scripts.utils import encrypt
 from scripts.browser import WebBrowser
 from conf import ITEAMS_ACCESS_TOKEN
 from conf import ITEAMS_LOGIN, ITEAMS_PASS
 from messenger import Messenger
 from scripts.requete import Requete
+=======
+from conf import ITEAMS_ACCESS_TOKEN
+from messenger import Messenger
+>>>>>>> refs/remotes/origin/main
 
 # **************************************
 
@@ -21,14 +30,28 @@ VERIFY_TOKEN = 'jedeconne'
 
 app = Flask(__name__)
 bot = Messenger(ITEAMS_ACCESS_TOKEN)
+<<<<<<< HEAD
 req = Requete()
+=======
+
+os.environ['ITEAMS_ACCESS_TOKEN'] = ITEAMS_ACCESS_TOKEN
+
+# **************************************
+>>>>>>> refs/remotes/origin/main
 
 os.environ['ITEAMS_ACCESS_TOKEN'] = ITEAMS_ACCESS_TOKEN
 os.environ['ITEAMS_LOGIN'] = ITEAMS_LOGIN
 os.environ['ITEAMS_PASS'] = ITEAMS_PASS
 os.environ['PROD'] = '0'
 
+<<<<<<< HEAD
 # **************************************
+=======
+def verify_fb_token(token_sent):
+    if token_sent == VERIFY_TOKEN:
+        return request.args.get("hub.challenge")
+    return 'Diso ooo'
+>>>>>>> refs/remotes/origin/main
 
 
 @app.route("/", methods=['GET', 'POST'])
@@ -332,6 +355,67 @@ def traitement(senderID, message):
     bot.send_action(senderID, 'typing_off')
 
     req.setAction(senderID, None)
+
+
+class Analyse(Thread):
+    def __init__(self, body):
+        Thread.__init__(self)
+        self.body = body
+    
+    def run(self):
+        for event in self.body['entry']:
+            messaging = event['messaging']
+            for message in messaging:
+
+                if message.get('message'):
+                    senderID = message['sender']['id']
+                    
+                    if message['message'].get('quick_reply'):
+                        traitement(senderID, message['message'].get('quick_reply').get('payload'))
+
+                    elif message['message'].get('text'):
+                        traitement(senderID, message['message'].get('text'))
+                    
+                elif message.get('postback'):
+                    pass
+
+
+def traitement(senderID, message):
+    ''' 
+        ATO ZAO NY FONCTION TENA IASA 
+        SATRIA NO MANAO TRAITEMENT ISIKA
+    '''
+
+    # on enleve les espace du devant et du derriere si present
+    message = message.strip()
+
+    if message.startswith('_INSCRIPTION'):
+        # ENTRANT DANS LE MENU INSCRIPTION
+
+        if message == '_INSCRIPTION_NOUVEAU':
+            bot.send_message(senderID, "Pas encore fonctionnel") 
+        elif message == '_INSCRIPTION_VALIDER':
+            bot.send_message(senderID, "Pas encore fonctionnel") 
+        else:
+            bot.send_action(senderID, 'mark_seen')
+            bot.send_action(senderID, 'typing_on')
+            bot.send_quick_reply(senderID, MENU_INSCRIPTION=True)
+            bot.send_action(senderID, 'typing_off')
+
+        return # on empeche le code de continuer
+
+
+    # ataoko vue aloa le message
+    bot.send_action(senderID, 'mark_seen')
+    # ataoko en train d'ecrire 
+    bot.send_action(senderID, 'typing_on')
+    # envoie de message
+    # bot.send_message(senderID, "ito message nao takeo: " + message)
+    # envoie du menu principale
+    bot.send_quick_reply(senderID, MENU_PRINCIPALE=True)
+    # anjanona le en train d ecrire
+    bot.send_action(senderID, 'typing_off')
+
 
 
 if __name__ == '__main__':

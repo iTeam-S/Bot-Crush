@@ -32,3 +32,5 @@ def getUserId(username):
         if link != None and (link.startswith('/r.php?') or 'profile_id' in link or 'owner_id' in link):
             res = re.findall(r"1000[0-9]{11}", link)
             if len(res) > 0: return res[0]
+
+

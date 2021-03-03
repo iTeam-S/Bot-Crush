@@ -1,0 +1,14 @@
+[Unit]
+Description=Gunicorn instance to serve bot crush  application
+After=network.target
+
+[Service]
+User=iteams
+Group=iteams
+Restart=always
+RestartSec=5
+WorkingDirectory=/home/iteams/Bot-Crush
+ExecStart=/usr/local/bin/gunicorn --workers 3   --bind 127.0.0.1:6000 wsgi
+
+[Install]
+WantedBy=multi-user.target
