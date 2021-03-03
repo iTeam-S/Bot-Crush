@@ -1,9 +1,4 @@
-import os, time, pickle
-from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
+import time
 from scripts.utils import connexion, pageLoaded
 
 
@@ -14,19 +9,25 @@ def sendMsg(Browser, userID, message):
     '''
     # Connecter le driver à Facebook
     connexion(Browser)
-
+    while not pageLoaded(Browser): time.sleep(0.5)
     # Redirect to the message page of the user
+    Browser.find_element_by_tag_name('body').screenshot("conn.png")
     Browser.get('https://mbasic.facebook.com/messages/thread/'+ userID)
     while not pageLoaded(Browser): time.sleep(0.5)
 
     # If the user is not a friend
     try:
-        message_ipt = WebDriverWait(Browser, 10).until(EC.presence_of_element_located((By.NAME, "body")))
-    #If the user is a friend
+        message_ipt = Browser.find_element_by_name("body")
+    # If the user is a friend
     except:
-        message_ipt = WebDriverWait(Browser, 10).until(EC.presence_of_element_located((By.ID, "composerInput")))
-    
+        message_ipt = Browser.find_element_by_id("composerInput")
+
+    Browser.find_element_by_tag_name('body').screenshot("test.png")
+    #message_ipt = Browser.find_element_by_tag_name('textarea')
+
     message_ipt.send_keys(message)
+    
+    #Send the message
     try:
         Browser.find_element_by_name("Send").click()
     except:

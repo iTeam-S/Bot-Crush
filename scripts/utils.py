@@ -1,4 +1,5 @@
 import os, time, pickle
+import hashlib
 
 
 def pageLoaded(Browser):
@@ -27,7 +28,9 @@ def connexion(Browser):
 					connexion(Browser)
 		Browser.get('https://mbasic.facebook.com/')
 		while not pageLoaded(Browser): time.sleep(0.5)
-		if 'login.php' in Browser.current_url:
+		Browser.find_element_by_tag_name('body').screenshot("conn.png")
+		if 'login' in Browser.current_url:
+			print('Je me login encore')
 			try:
 				os.remove('cookies.pkl')
 			except FileNotFoundError:
@@ -46,8 +49,13 @@ def connexion(Browser):
 
 	Browser.find_element_by_name("login").click()
 	while not pageLoaded(Browser): time.sleep(0.5)
-
+	Browser.find_element_by_tag_name('body').screenshot("conn1.png")
+	print("connexion success")
 	with open("cookies.pkl","wb") as fcookies:
 		pickle.dump(Browser.get_cookies() , fcookies)
 
-
+		
+def encrypt(string):
+	hash = hashlib.sha224()
+	string_crypt = hash.update(string.encode('utf8'))
+	return hash.hexdigest()

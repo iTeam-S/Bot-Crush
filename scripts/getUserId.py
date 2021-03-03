@@ -1,7 +1,7 @@
 import requests, re
-from browser import WebBrowser
+from scripts.browser import WebBrowser
 from bs4 import BeautifulSoup
-from utils import *
+from scripts.utils import *
 
 
 def getUserId(username):
@@ -11,7 +11,6 @@ def getUserId(username):
     '''
 
     # Les données du cookies du navigateur
-    
     driver  =  WebBrowser()
     connexion(driver.browser)
 
@@ -22,7 +21,7 @@ def getUserId(username):
 
     s = requests.Session()
     r = s.get("https://mbasic.facebook.com/" + username, cookies=cookies)
-    
+
     if r.status_code == 404:
         return
 
@@ -30,6 +29,6 @@ def getUserId(username):
 
     for balise_a in src_code.find_all('a') :
         link = balise_a.get('href')
-        if link.startswith('/r.php?') or 'profile_id' in link:
+        if link != None and (link.startswith('/r.php?') or 'profile_id' in link or 'owner_id' in link):
             res = re.findall(r"1000[0-9]{11}", link)
             if len(res) > 0: return res[0]
