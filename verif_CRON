@@ -1,0 +1,130 @@
+#!/bin/bash
+
+# script de verification de n'importe quelle script, 
+# suffit de mettre en argument le script en question (chemin absolue)
+# ex: verif_CRON php /var/www/htdocs/custom/test.php
+
+# utile pour l'output de l'erreur
+rouge='\e[0;31m'
+neutre='\e[0;m'
+vert='\e[0;32m'
+
+# fonction affichant un output d'aide au cas de mauvaise utilisation de la commande
+usage() { 
+    echo -e "Usage: ${vert}$0 [-t <heures>] [-x <chaines>] SCRIPT\n${neutre}" 1>&2;
+    echo -e "-t (optionnel): temps de relance du script en heures [Pas de relance par defaut]" 1>&2;
+    echo -e "-x (optionnel): argument pour le lancement du grep [2 premiers argument par defaut]" 1>&2;
+    echo -e "-k (optionnel): processus killer avant relance \n" 1>&2;
+    echo -e "exemples: \n  verif_CRON -t 1 php /var/www/htdocs/alerte.php" 1>&2;
+    echo -e "  verif_CRON -t 1 -x critere_alerte.php php /var/www/htdocs/alerte.php" 1>&2;
+    echo -e "  verif_CRON php /var/www/htdocs/alerte.php\n" 1>&2;
+    exit 1;
+}
+
+
+# Analyse des parametres entrée avec la commande
+while getopts "t:x:k:" option; do
+    case "${option}" in
+        t)
+            t=${OPTARG}
+
+            if [ -n "$t" ] && [ "$t" -eq "$t" ] ; then
+              echo -e "${vert} Processus redemmaree apres $t heures de marche.${neutre}"
+            else
+              usage
+            fi
+            ;;
+        x)
+            x=${OPTARG}
+            ;;
+        k)
+            k=${OPTARG}
+            ;;
+        *)
+            usage
+            ;;
+    esac
+done
+shift $((OPTIND-1))
+
+
+# VERIFICATION SCRIPT 
+if [ $# -le 0 ] ; then
+    # le script a verifier est manquant
+    echo -e "${rouge}Le SCRIPT est manquant \n${neutre}"; usage
+
+elif [ ! -z "${x}" ] ; then
+    # cas ou l'argument de verification est donné
+    # ex: veirf_CRON -x loopScript php loopScript.php
+    proc=`ps -eo pid,start,command --sort -start|grep $x |grep -v grep |grep -v $0`
+
+elif [ $# -eq 1 ] ; then
+    # cas d'une seule chaine de script
+    # ex: /var/www/monscript.sh
+
+    proc=`ps -eo pid,start,command --sort -start|grep $1 |grep -v grep |grep -v $0`
+
+elif [ $# -ge 2 ] ; then
+    # cas de plusieurs chaine de script
+    # ex: php /var/www/htdocs/statut.php
+    # ex: php /var/www/rattrapage.php 20201101 20210201 > /var/www/rattrapage_20210201.txt
+    
+    # on verifie que les deux premieres chaines
+    proc=`ps -eo pid,start,command --sort -start|grep $1 |grep $2 |grep -v grep |grep -v $0`
+fi
+
+
+if [ $? -eq 0 ]; then
+	# cas ou le script est en cours
+
+    # on verifie que le parametre temps de kill est present
+    if [ ! -z "${t}" ] ; then
+
+        # on recupere l'heure du lancement du script
+        proc_start=`echo $proc |cut -d ' ' -f 2`
+
+        # on calcul la difference avec l'heure actuel
+        res=`date -u -d @$(( $(date +%s) - $(date -d $proc_start +%s) )) +%H`
+        let "res=$res"
+
+        if [ $res -lt $t ]; then
+        	# cas ou le script fonctionne moins de t heures
+
+        	# Ne rien faire
+            echo -e "\nscript '$@' deja en cours\n"
+        else
+        	# cas ou le script tourne depuis +t heures
+    		
+    		echo -e "En cours depuis $res heures de temps \n\n"
+
+    		# on kill le processus present different de celui-ci
+            # on ajout grep -v $0 pour eviter le suicide
+
+            if [ ! -z "${x}" ] ; then
+			   kill-grep "$x |grep -v $0"
+			elif [ $# -eq 1 ] ; then
+				kill-grep "$1 |grep -v $0"
+			elif [ $# -ge 2 ] ; then
+				kill-grep "$1 |grep $2 |grep -v $0"
+			fi
+            
+            if [ ! -z "${k}" ] ; then
+                kill-grep "$k |grep -v $0"
+            fi
+            echo -e "\n Lancement du '$@' \n"
+            # On lance le script en arriere plan
+            $@ &
+        fi
+    else
+        echo -e "\nscript '$@' deja en cours\n"
+    fi
+
+else
+	# cas ou le script n'est pas en cours 
+    if [ ! -z "${k}" ] ; then
+		kill-grep "$k |grep -v $0"
+    fi
+    echo -e "\n Lancement du '$@' \n"
+    # On lance le script en arriere plan
+    $@ &
+fi
