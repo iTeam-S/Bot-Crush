@@ -3,9 +3,6 @@ import os, time, json
 from scripts.utils import *
 from scripts.requete import Requete
 from scripts.browser import WebBrowser
-from scripts.sendMsg import sendMsg
-from scripts.delMsg import delMsg
-from scripts.getUserId import getUserId
 
 from messenger import Messenger
 
