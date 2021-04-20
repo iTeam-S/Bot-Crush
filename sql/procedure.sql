@@ -21,12 +21,10 @@ BEGIN
 				IF done = 0 THEN
 				
 					IF v_crush = SHA2(userID, 224) THEN
-						
-						SELECT 
-							CASE 
-								WHEN COUNT(*)>0 THEN TRUE ELSE FALSE
-							END INTO gg
-						FROM Crush WHERE recv = (SELECT SHA2(username_id, 224) FROM Utilisateur WHERE SHA2(id, 224) = v_user)
+
+                        SELECT IF(COUNT(*) > 0, TRUE, FALSE)
+                        INTO gg
+                        FROM Crush WHERE recv = (SELECT SHA2(username_id, 224) FROM Utilisateur WHERE SHA2(id, 224) = v_user)
 						AND send = (SELECT SHA2(id, 224) FROM Utilisateur WHERE SHA2(username_id, 224) = v_crush)
 						AND v_user <> (SELECT SHA2(id, 224) FROM Utilisateur WHERE username_id = userID)
 						AND notification = 0;

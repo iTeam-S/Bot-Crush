@@ -1,4 +1,7 @@
-requests
-flask
-selenium
-bs4
+requests~=2.25.1
+flask~=1.1.2
+selenium~=3.141.0
+bs4~=0.0.1
+
+beautifulsoup4~=4.9.3
+mysql~=0.0.2
