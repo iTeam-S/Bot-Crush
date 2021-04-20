@@ -1,7 +1,7 @@
 import os, time, pickle
 import hashlib
 
-#from messenger import Messenger
+
 def pageLoaded(Browser):
 	'''
 	    Pour verifier qu'un driver a fini de charger la page...
@@ -9,14 +9,17 @@ def pageLoaded(Browser):
 	'''
 	status = Browser.execute_script('return document.readyState;')
 	return status == 'complete'
+
+
 def connexion(Browser):
 	'''
 		fonction de connexion pour le driver donnee en parametre
 		avec verification de presence de cookie.
 	'''
 	Browser.get('https://mbasic.facebook.com/')
+
 	if os.path.isfile('cookies.pkl'):
-		with open("cookies.pkl", "rb") as fcookies:
+		with open("cookies.pkl", "rb") as fcookies: 
 			cookies = pickle.load(fcookies)
 			for cookie in cookies:
 				try:
@@ -37,7 +40,13 @@ def connexion(Browser):
 				connexion(Browser)
 		return
 	Browser.get('https://mbasic.facebook.com/')
-	#Login to the fb account
+	# Login to the fb account
+	# print(Browser.page_source)
+	# print(Browser.current_url)
+	if '/cookie/' in Browser.current_url:
+		print('ato va')
+		Browser.find_element_by_xpath('//button[@type="submit"]').click()
+	Browser.find_element_by_tag_name('body').screenshot("conn1.png")
 	username_ipt = Browser.find_element_by_id("m_login_email")
 	username_ipt.send_keys(os.environ.get("ITEAMS_LOGIN"))
 	print("Variable env => ",os.environ.get("ITEAMS_LOGIN"))
@@ -58,3 +67,17 @@ def encrypt(string):
 
 	string_crypt = hash.update(string.encode('utf8'))
 	return hash.hexdigest()
+
+
+def decode(txt_encode):
+	txt = ''
+	for u in txt_encode.split('-'):
+		txt = txt + chr(int(u))
+	return txt
+
+
+def encode(txt):
+	txt_encode = ''
+	for u in txt:
+		txt_encode = txt_encode + str(ord(u)) + '-'
+	return txt_encode[:-1]

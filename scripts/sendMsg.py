@@ -1,5 +1,5 @@
 import time
-from scripts.utils import connexion, pageLoaded
+from scripts.utils import pageLoaded
 
 
 def sendMsg(Browser, userID, message):
@@ -8,7 +8,6 @@ def sendMsg(Browser, userID, message):
             Elle admet trois parametres, le driver, l'userID (ex: 100000144) et le message en texte.
     '''
     # Connecter le driver à Facebook
-    connexion(Browser)
     while not pageLoaded(Browser): time.sleep(0.5)
     # Redirect to the message page of the user
     Browser.find_element_by_tag_name('body').screenshot("conn.png")
@@ -22,7 +21,7 @@ def sendMsg(Browser, userID, message):
     except:
         message_ipt = Browser.find_element_by_id("composerInput")
 
-    Browser.find_element_by_tag_name('body').screenshot("test.png")
+    #Browser.find_element_by_tag_name('body').screenshot("test.png")
     #message_ipt = Browser.find_element_by_tag_name('textarea')
 
     message_ipt.send_keys(message)

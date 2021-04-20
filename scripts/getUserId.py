@@ -4,20 +4,15 @@ from bs4 import BeautifulSoup
 from scripts.utils import *
 
 
-def getUserId(username):
+def getUserId(username, driver):
     '''
         A partir d'un username du profil facebook, 
             retourne l'userID sinon None si Not found
     '''
 
     # Les données du cookies du navigateur
-    driver  =  WebBrowser()
-    connexion(driver.browser)
 
     cookies = {cookie['name']:cookie['value'] for cookie in driver.browser.get_cookies()}
-
-    driver.browser.close()
-    del driver
 
     s = requests.Session()
     r = s.get("https://mbasic.facebook.com/" + username, cookies=cookies)
