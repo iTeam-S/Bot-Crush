@@ -60,7 +60,8 @@ def send_code_confirmation(dest_id, lien_profil):
         return
 
     else:
-        bot.send_message(dest_id, "Nous vous informerons quand votre code de confirmation sera envoyé.")
+        bot.send_message(dest_id, "Nous vous informerons quand \
+            votre code de confirmation sera envoyé.")
         req.setAction(dest_id, None)
     bot.send_action(dest_id, 'typing_off')
 
@@ -76,7 +77,8 @@ def verif_code_confirmation(dest_id, code, message, action):
     else:
         bot.send_action(dest_id, 'mark_seen')
         bot.send_action(dest_id, 'typing_on')
-        bot.send_message(dest_id, "❌Le code semble incorrect. Veuillez saisir un code valide ;-) .")
+        bot.send_message(dest_id, "❌Le code semble incorrect.\
+            Veuillez saisir un code valide ;-) .")
         bot.send_action(dest_id, 'typing_off')
         req.setAction(dest_id, None)
         return
@@ -92,14 +94,14 @@ def ajout_crush(dest_id, lien_crush):
 
     bot.send_action(dest_id, 'mark_seen')
     bot.send_action(dest_id, 'typing_on')
-    bot.send_message(dest_id, "☺Cela peut prendre quelques secondes, veuillez patienter s'il vous plaît.")
+    bot.send_message(dest_id, "☺Cela peut prendre quelques secondes, \
+        veuillez patienter s'il vous plaît.")
     bot.send_action(dest_id, 'typing_off')
 
-    req.insertTache(1, dest_id,
-                    "Félicitations :-*, une personne vient de nous informer qu'elle crush sur vous dans la page "
-                    "iTeam-$ Bot Crush :-)",
-                    f'{{"username_crush": "{encode(username)}" }}'
-                    )
+    req.insertTache(1, dest_id, "Félicitations :-*, \
+        une personne vient de nous informer qu'elle crush \
+        sur vous dans la page iTeam-$ Bot Crush :-)", f'{{"username_crush":\
+            "{encode(username)}" }}')
 
     req.setAction(dest_id, None)
 
@@ -110,18 +112,16 @@ def verif_nb_crush(sender_id):
 
     if nb_crush >= 3:
         bot.send_action(sender_id, 'typing_on')
-        bot.send_message(sender_id,
-                         "😑😑😑Malheureusement vous avez atteint le nombre limite de crushs pour ce mois. Revenez le "
-                         "mois prochain.")
+        bot.send_message(sender_id, "😑😑😑Malheureusement vous avez atteint\
+         le nombre limite de crushs pour ce mois. Revenez le mois prochain.")
         bot.send_action(sender_id, 'typing_off')
         req.setAction(sender_id, None)
         return
 
     else:
-        # verif_code_confirmation(senderID, message,"Veuillez nous fournir le lien de son profil s'il vous plaît.",
-        # "ATTENTE_LIEN_CRUSH")
         bot.send_action(sender_id, 'typing_on')
-        bot.send_message(sender_id, "Veuillez nous fournir le lien de profil de votre crush❣ s'il vous plaît")
+        bot.send_message(sender_id, "Veuillez nous fournir le lien de profil \
+            de votre crush❣ s'il vous plaît")
         bot.send_action(sender_id, 'typing_off')
         req.setAction(sender_id, 'ATTENTE_LIEN_CRUSH')
 
@@ -145,13 +145,9 @@ def traitement(sender_id, message):
         return
 
     elif statut == 'ATTENTE_CODE_CONFIRMATION':
-        verif_code_confirmation(sender_id, message, "✔Votre inscription a été confirmée :-) .", None)
-        # a etudier bot.send_code_confirmation(senderID,"Souvenez vous votre code de confirmation. Vous allez en avoir
-        # besoin plutard.")
+        verif_code_confirmation(sender_id, message, "✔Votre inscription \
+            a été confirmée :-) .", None)
         return
-
-    # elif statut=='ATTENTE_CODE_CRUSH': verif_code_confirmation(senderID, message,"Veuillez nous fournir le lien de
-    # son profil s'il vous plaît.","ATTENTE_LIEN_CRUSH") return
 
     elif statut == "ATTENTE_LIEN_CRUSH":
         ajout_crush(sender_id, message)
@@ -166,7 +162,8 @@ def traitement(sender_id, message):
         if message == '_INSCRIPTION_NOUVEAU':
             bot.send_action(sender_id, 'mark_seen')
             bot.send_action(sender_id, 'typing_on')
-            bot.send_message(sender_id, "Veuillez fournir le lien de votre profil s'il vous plait.")
+            bot.send_message(sender_id, "Veuillez fournir le lien de votre \
+                profil s'il vous plait.")
             req.setAction(sender_id, 'ATTENTE_LIEN_PROFIL')
             bot.send_action(sender_id, 'typing_off')
             return
@@ -174,8 +171,8 @@ def traitement(sender_id, message):
         elif message == '_INSCRIPTION_VALIDER':
             bot.send_action(sender_id, 'mark_seen')
             bot.send_action(sender_id, 'typing_on')
-            bot.send_message(sender_id,
-                             "Veuillez saisir le code de confirmation qu'on vient de vous envoyer s'il vous plait.")
+            bot.send_message(sender_id, "Veuillez saisir le code\
+                de confirmation qu'on vient de vous envoyer s'il vous plait.")
             bot.send_action(sender_id, 'typing_off')
             req.setAction(sender_id, 'ATTENTE_CODE_CONFIRMATION')
             return
@@ -194,11 +191,14 @@ def traitement(sender_id, message):
     # ataoko vue aloa le message
     bot.send_action(sender_id, 'mark_seen')
 
-    # ataoko en train d'ecrire 
+    # ataoko en train d'ecrire
     bot.send_action(sender_id, 'typing_on')
 
     # envoie du menu principale
-    bot.send_quick_reply(sender_id, MENU_PRINCIPALE=True, INSCRIPTION=req.verifInscription(sender_id))
+    bot.send_quick_reply(
+        sender_id, MENU_PRINCIPALE=True,
+        INSCRIPTION=req.verifInscription(sender_id)
+    )
 
     # anjanona le en train d ecrire
     bot.send_action(sender_id, 'typing_off')
@@ -221,9 +221,9 @@ def receive_message():
             return request.args.get("hub.challenge")
 
     elif request.method == "POST":
-        # recuperena le json nalefany facebook 
+        # recuperena le json nalefany facebook
         body = request.get_json()
-        # alefa any amn processus afa manao azy 
+        # alefa any amn processus afa manao azy
         run = Thread(target=analyse, args=[body])
         run.start()
 
@@ -238,7 +238,10 @@ def analyse(body):
 
                 sender_id = message['sender']['id']
                 if message['message'].get('quick_reply'):
-                    traitement(sender_id, message['message'].get('quick_reply').get('payload'))
+                    traitement(
+                        sender_id,
+                        message['message'].get('quick_reply').get('payload')
+                    )
                 elif message['message'].get('text'):
                     traitement(sender_id, message['message'].get('text'))
 
