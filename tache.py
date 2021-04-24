@@ -30,7 +30,7 @@ def tache1(data):
         return
     try:
         send_msg(driver.browser, crushId, data[3])
-        req.ajoutCrush(encrypt(crushId), encrypt(data[2]))
+        req.ajoutCrush(crushId, data[2])
         bot.send_action(data[2], 'mark_seen')
         bot.send_action(data[2], 'typing_on')
         bot.send_message(data[2], "✔Votre crush a été bien enregistrer. \n Merci pour votre confiance.")
@@ -39,19 +39,7 @@ def tache1(data):
     except Exception as err:
         print(err)
         bot.send_message(data[2], "❌❌❌Oh, une erreur s'est produite :-/")
-        return
-
-    nb_crush = req.getNbCrush(encrypt(data[2]))
-
-    if 3 - nb_crush == 0:
-        reponse = "🙄🙄Vous avez atteint le nombre limite de crushs pour ce mois. Revenez le mois prochain"
-    else:
-        if (3 - nb_crush) > 1:
-            reponse = "Vous pouvez encore crusher sur " + str(3 - nb_crush) + " personnes pendant ce mois."
-        else:
-            reponse = "Vous pouvez encore crusher sur " + str(3 - nb_crush) + " personne pendant ce mois."
-
-    bot.send_message(data[2], reponse)
+        return None
     bot.send_action(data[2], 'typing_off')
 
     res, val = req.match(req.getUserID(data[2]))

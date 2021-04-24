@@ -114,12 +114,13 @@ class Messenger:
         links = "https://graph.facebook.com/" + user_id + "?fields=gender&access_token=" + self.token
         request = requests.get(links)
 
-        sex = request.json()["gender"]
+        sex = request.json().get("gender")
 
         if sex == "male":
             gender = 1
-
-        else:
+        elif sex == "female":
             gender = 0
+        else:
+            gender = None
 
         return gender

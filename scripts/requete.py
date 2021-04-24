@@ -102,7 +102,7 @@ class Requete:
 		    INSERT INTO Crush
 		    (recv, send) 
 		    VALUES
-		    (%s, %s)
+		    (SHA2(%s, 224), SHA2(%s, 224))
 		'''
         self.cursor.execute(req, (username_crush, ID_utilisateur))
         self.db.commit()
@@ -112,7 +112,7 @@ class Requete:
         req = '''
 		    SELECT COUNT(*) AS nb_crush
 		    FROM Crush
-		    WHERE send = %s
+		    WHERE send = SHA2(%s, 224)
 		    AND MONTH(date) = MONTH(CURDATE())
 		    AND YEAR(date) = YEAR(CURDATE())
 		'''

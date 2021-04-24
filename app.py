@@ -9,7 +9,7 @@ from flask import Flask, request
 
 from messenger import Messenger
 from scripts.requete import Requete
-from scripts.utils import encrypt, encode
+from scripts.utils import encode
 
 # **************************************
 
@@ -108,7 +108,7 @@ def ajout_crush(dest_id, lien_crush):
 
 def verif_nb_crush(sender_id):
     bot.send_action(sender_id, 'mark_seen')
-    nb_crush = req.getNbCrush(encrypt(sender_id))
+    nb_crush = req.getNbCrush(sender_id)
 
     if nb_crush >= 3:
         bot.send_action(sender_id, 'typing_on')

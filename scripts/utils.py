@@ -153,13 +153,6 @@ def get_user_id(username, driver):
             if len(res) > 0: return res[0]
 
 
-# noinspection PyNoneFunctionAssignment
-def encrypt(string):
-    _hash = hashlib.sha224()
-
-    # string_crypt = _hash.update(string.encode('utf8'))
-    return _hash.hexdigest()
-
 
 def decode(txt_encode):
     txt = ''
