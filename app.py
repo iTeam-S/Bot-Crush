@@ -51,7 +51,7 @@ def send_code_confirmation(dest_id, lien_profil):
     try:
         bot.send_action(dest_id, 'mark_seen')
         bot.send_action(dest_id, 'typing_on')
-        req.updateCode(dest_id, username, code, None, sexe)
+        req.updateCode(dest_id, username, code, None, sexe)   
         req.insertTache(3, dest_id, message)
 
     except Exception as err:

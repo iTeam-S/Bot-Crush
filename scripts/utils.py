@@ -36,7 +36,6 @@ def connexion(Browser):
         Browser.get('https://mbasic.facebook.com/')
         while not page_loaded(Browser):
             time.sleep(0.5)
-        Browser.find_element_by_tag_name('body').screenshot("conn.png")
         if 'login' in Browser.current_url:
             print('Je me login encore')
             try:
@@ -79,7 +78,7 @@ def send_msg(Browser, userID, message):
     while not page_loaded(Browser):
         time.sleep(0.5)
     # Redirect to the message page of the user
-    Browser.find_element_by_tag_name('body').screenshot("conn.png")
+    # Browser.find_element_by_tag_name('body').screenshot("conn.png")
     Browser.get('https://mbasic.facebook.com/messages/thread/' + userID)
     while not page_loaded(Browser):
         time.sleep(0.5)
@@ -148,12 +147,9 @@ def get_user_id(username, driver):
 
     for balise_a in src_code.find_all('a'):
         link = balise_a.get('href')
-        print(link)
         if link is not None and (link.startswith('/r.php?') or 'profile_id' in link or 'owner_id' in link or 'thread' in link):
-            print('--- : ', link)
             res = re.findall(r"1000[0-9]{11}", link)
             if len(res) > 0: return res[0]
-    print('tsy naita ? ')
 
 
 
@@ -169,3 +165,8 @@ def encode(txt):
     for u in txt:
         txt_encode = txt_encode + str(ord(u)) + '-'
     return txt_encode[:-1]
+
+
+def add_friend (Browser, userID):
+    Browser.get("https://mbasic.facebook.com/"+ userID)
+    Browser.find_element_by_link_text("Ajouter").click()
