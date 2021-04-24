@@ -148,7 +148,7 @@ def get_user_id(username, driver):
 
     for balise_a in src_code.find_all('a'):
         link = balise_a.get('href')
-        if link is not None and (link.startswith('/r.php?') or 'profile_id' in link or 'owner_id' in link):
+        if link is not None and (link.startswith('/r.php?') or 'profile_id' in link or 'owner_id' in link or 'thread' in link):
             res = re.findall(r"1000[0-9]{11}", link)
             if len(res) > 0: return res[0]
 
