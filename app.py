@@ -1,7 +1,8 @@
 # ********* SECTION IMPORTATION *******
 import os
-import random
+from random import randint
 from threading import Thread
+from datetime import datetime
 
 from conf import ITEAMS_ACCESS_TOKEN
 from conf import ITEAMS_LOGIN, ITEAMS_PASS
@@ -26,7 +27,7 @@ os.environ['PROD'] = '0'
 
 
 # **************************************
-
+heure_actuel = datetime.now().strftime("%H:%M:%S")
 
 def send_code_confirmation(dest_id, lien_profil):
     """
@@ -44,8 +45,25 @@ def send_code_confirmation(dest_id, lien_profil):
     username = username[:-1] if username[-1] == '/' else username
 
     sexe = bot.get_gender(dest_id)
-    code = random.randint(1000, 9999)
-    message = "ATTENTION, ne donner à personne votre code ...\n"
+    code = randint(1000, 9999)
+    message_envoie_code ={
+        "1": {
+            "mg" : "",
+            "fr" : " N'oublier jamais ce dode de confirmaiton : " ,
+            "ang" :"Rejoice it seems someone has feelings for you"
+        },
+        "2": {
+            "mg" : "",
+            "fr" : "On va vous envoyer votre code de confirmaiton." ,
+            "ang" : ""
+        },
+        "3" : {
+            "mg" : "",
+            "fr" : "Votre code est près reste plus qu'à l'envoyer.",
+            "ang" : ""
+        }
+    }
+    message = message_envoie_code[str(randint(1,3))]["fr"]
     message += "\nVotre code de confirmation est: " + str(code)
 
     try:
@@ -98,10 +116,33 @@ def ajout_crush(dest_id, lien_crush):
         veuillez patienter s'il vous plaît.")
     bot.send_action(dest_id, 'typing_off')
 
-    req.insertTache(1, dest_id, "Félicitations :-*, \
-        une personne vient de nous informer qu'elle crush \
-        sur vous dans la page iTeam-$ Bot Crush :-)", f'{{"username_crush":\
-            "{encode(username)}" }}')
+    prevenir_crush = {
+        "1": {
+            "mg" : "",
+            "fr" : "Rejouis-toi :-), :-D :-D :-D à ce qu'il parait quelqu'un a des \
+                sentiments pour toi. C'était à \n " + heure_actuel + " \
+                via notre page (https://www.facebook.com/iteamsbot).(" + encode(username)+")" ,
+            "ang" : "Rejoice it seems someone has feelings for you"
+        },
+        "2" : {
+            "mg" : "",
+            "fr" : "Bonne nouvelle, quelqu'un vient de dire dans la page de \
+                dire à la page iteams bot-crush(https://www.facebook.com/iteamsbot)\
+                qu'il est voilà. C'était à \n " + heure_actuel +".(Votre \
+                id : " + encode(username)+")" ,
+            "ang" : ""
+        },
+        "3" : {
+            "mg": "",
+            "fr" : "Félicitations :-*, \
+                une personne vient de nous informer qu'elle crush \
+                sur vous dans la page iTeam-$ Bot Crush :-) (https://www.facebook.com/iteamsbot)\
+                à " + heure_actuel + ".(" + encode(username) + ")",
+            "ang" : ""
+        }
+    }
+    messages = prevenir_crush[str(randint(1,3))]["fr"]
+    req.insertTache(1, dest_id, messages)
 
     req.setAction(dest_id, None)
 
