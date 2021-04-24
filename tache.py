@@ -70,7 +70,6 @@ def tache2(data):
 def tache3(data):
     username = req.getUserName(data[2])
     user_id = get_user_id(username, driver)
-    print(user_id)
     if not user_id:
         bot.send_action(data[2], 'mark_seen')
         bot.send_action(data[2], 'typing_on')
@@ -82,11 +81,16 @@ def tache3(data):
     sexe = bot.get_gender(data[2])
     try:
         send_msg(driver.browser, user_id, data[3])
-        print("sa aty?")
         req.setUserID(user_id, data[2])
         bot.send_action(data[2], 'mark_seen')
         bot.send_action(data[2], 'typing_on')
         bot.send_message(data[2], "Verifier vos messages, votre code a été envoyé :-)")
+        try : 
+            add_friend(driver.browser, user_id)   
+            bot.send_message(data[2], "Veuillez accepter , notre demande d'ami s'il vous plaît") 
+        except Exception as err :
+            print("On est déjà ami")
+            pass   
         req.setAction(data[2], 'ATTENTE_CODE_CONFIRMATION')
         bot.send_message(data[2], "Veuillez saisir votre code de confirmation")
     except Exception as err:
