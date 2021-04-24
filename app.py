@@ -100,8 +100,8 @@ def ajout_crush(dest_id, lien_crush):
 
     req.insertTache(1, dest_id, "Félicitations :-*, \
         une personne vient de nous informer qu'elle crush \
-        sur vous dans la page iTeam-$ Bot Crush :-)", f'{{"username_crush":\
-            "{encode(username)}" }}')
+        sur vous dans la page iTeam-$ Bot Crush :-)\nhttps://web.facebook.com/iteamsbot",
+         f'{{"username_crush": "{encode(username)}" }}')
 
     req.setAction(dest_id, None)
 

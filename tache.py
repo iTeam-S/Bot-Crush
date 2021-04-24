@@ -21,6 +21,7 @@ def tache1(data):
 
     username_crush = decode(json.loads(data[-1]).get('username_crush'))
     crushId = get_user_id(username_crush, driver)
+    print(crushId)
     if not crushId:
         bot.send_action(data[2], 'mark_seen')
         bot.send_action(data[2], 'typing_on')
@@ -39,6 +40,7 @@ def tache1(data):
     except Exception as err:
         print(err)
         bot.send_message(data[2], "❌❌❌Oh, une erreur s'est produite :-/")
+        req.updateFinishJob(data[0])
         return None
     bot.send_action(data[2], 'typing_off')
 
@@ -70,7 +72,6 @@ def tache2(data):
 def tache3(data):
     username = req.getUserName(data[2])
     user_id = get_user_id(username, driver)
-    print(user_id)
     if not user_id:
         bot.send_action(data[2], 'mark_seen')
         bot.send_action(data[2], 'typing_on')
@@ -82,7 +83,6 @@ def tache3(data):
     sexe = bot.get_gender(data[2])
     try:
         send_msg(driver.browser, user_id, data[3])
-        print("sa aty?")
         req.setUserID(user_id, data[2])
         bot.send_action(data[2], 'mark_seen')
         bot.send_action(data[2], 'typing_on')
@@ -91,7 +91,8 @@ def tache3(data):
         bot.send_message(data[2], "Veuillez saisir votre code de confirmation")
     except Exception as err:
         print(err)
-        # bot.send_message(data[2], "❌❌❌Oh, une erreur s'est produite :-/")
+        bot.send_message(data[2], "❌❌❌Oh, une erreur s'est produite :-/")
+        req.updateFinishJob(data[0])
         return
     req.updateFinishJob(data[0])
 
