@@ -142,15 +142,16 @@ def ajout_crush(dest_id, lien_crush):
         }
     ]
     messages = prevenir_crush[random.randint(0, 2)]["fr"]
+    messages += "\n Visiter la page pour connaître le fonctionnement. Merci"
     req.insertTache(1, dest_id, messages, f'{{"username_crush": "{encode(username)}" }}')
     req.setAction(dest_id, None)
 
 
 def verif_nb_crush(sender_id):
     bot.send_action(sender_id, 'mark_seen')
-    nb_crush = req.getNbCrush(sender_id)
+    nb_crush = req.verifNbCrush(sender_id)
 
-    if nb_crush >= 3:
+    if nb_crush:
         bot.send_action(sender_id, 'typing_on')
         bot.send_message(sender_id, "😑😑😑Malheureusement vous avez atteint\
         le nombre limite de crushs pour ce mois. Revenez le mois prochain.")

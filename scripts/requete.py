@@ -107,16 +107,20 @@ class Requete:
         self.cursor.execute(req, (username_crush, ID_utilisateur))
         self.db.commit()
 
-    def getNbCrush(self, ID_utilisateur):
+    def verifNbCrush(self, ID_utilisateur):
         self.__verif()
         req = '''
-		    SELECT COUNT(*) AS nb_crush
+		    SELECT CASE WHEN 
+                COUNT(*) >= (
+                    SELECT limitCrush FROM Utilisateur 
+                    WHERE id=%s
+                ) THEN True ELSE False END AS verif
 		    FROM Crush
 		    WHERE send = SHA2(%s, 224)
 		    AND MONTH(date) = MONTH(CURDATE())
 		    AND YEAR(date) = YEAR(CURDATE())
 		'''
-        self.cursor.execute(req, (ID_utilisateur,))
+        self.cursor.execute(req, (ID_utilisateur, ID_utilisateur))
         return self.cursor.fetchone()[0]
 
     def getUserID(self, ID_utilisateur):
