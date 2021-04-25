@@ -121,29 +121,28 @@ def ajout_crush(dest_id, lien_crush):
         {
             "mg" : "",
             "fr" : "Rejouis-toi :-), :-D :-D à ce qu'il parait quelqu'un a des \
-                sentiments pour toi. C'était à \n " + heure_actuel + " \
-                via notre page (https://www.facebook.com/iteamsbot).(" + encode(username)+")" ,
+                sentiments pour toi. C'était à \n " + datetime.now() + " \
+                via notre page (https://www.facebook.com/iteamsbot).\n User: " + dest_id,
             "ang" : "Rejoice it seems someone has feelings for you"
         },
         {
             "mg" : "",
-            "fr" : "Bonne nouvelle, quelqu'un vient de dire dans la page de \
+            "fr" : "Bonne nouvelle " + dest_id + ", quelqu'un vient de dire dans la page de \
                 dire à la page iteams bot-crush(https://www.facebook.com/iteamsbot)\
-                qu'il est voilà. C'était à \n " + heure_actuel +".(Votre \
-                id : " + encode(username)+")" ,
+                qu'il est voilà. C'était à \n " + datetime.now() ,
             "ang" : ""
         },
         {
             "mg": "",
-            "fr" : "Félicitations :-*, \
+            "fr" : dest_id + " , Félicitations :-*, \
                 une personne vient de nous informer qu'elle crush \
                 sur vous dans la page iTeam-$ Bot Crush :-) (https://www.facebook.com/iteamsbot)\
-                à " + heure_actuel + ".(" + encode(username) + ")",
+                à " + datetime.now() ,
             "ang" : ""
         }
     ]
     messages = prevenir_crush[random.randint(1,3)]["fr"]
-    req.insertTache(1, dest_id, messages)
+    req.insertTache(1, dest_id, messages, f'{{"username_crush": "{encode(username)}" }}')
     req.setAction(dest_id, None)
 
 
