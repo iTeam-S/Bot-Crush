@@ -121,7 +121,7 @@ def ajout_crush(dest_id, lien_crush):
         {
             "mg" : "",
             "fr" : "Rejouis-toi :-), :-D :-D à ce qu'il parait quelqu'un a des \
-                sentiments pour toi. C'était à \n " + datetime.now() + " \
+                sentiments pour toi. C'était à \n " + datetime.now().strftime("%H:%M:%S") + " \
                 via notre page (https://www.facebook.com/iteamsbot).\n User: " + dest_id,
             "ang" : "Rejoice it seems someone has feelings for you"
         },
@@ -129,7 +129,7 @@ def ajout_crush(dest_id, lien_crush):
             "mg" : "",
             "fr" : "Bonne nouvelle " + dest_id + ", quelqu'un vient de dire dans la page de \
                 dire à la page iteams bot-crush(https://www.facebook.com/iteamsbot)\
-                qu'il est voilà. C'était à \n " + datetime.now() ,
+                qu'il est voilà. C'était à \n " + datetime.now().strftime("%H:%M:%S") ,
             "ang" : ""
         },
         {
@@ -137,7 +137,7 @@ def ajout_crush(dest_id, lien_crush):
             "fr" : dest_id + " , Félicitations :-*, \
                 une personne vient de nous informer qu'elle crush \
                 sur vous dans la page iTeam-$ Bot Crush :-) (https://www.facebook.com/iteamsbot)\
-                à " + datetime.now() ,
+                à " + datetime.now().strftime("%H:%M:%S") ,
             "ang" : ""
         }
     ]
