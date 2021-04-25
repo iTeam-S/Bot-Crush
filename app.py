@@ -1,5 +1,6 @@
 # ********* SECTION IMPORTATION *******
 import os
+from datetime import datetime
 import random
 from threading import Thread
 
@@ -98,10 +99,10 @@ def ajout_crush(dest_id, lien_crush):
         veuillez patienter s'il vous plaît.")
     bot.send_action(dest_id, 'typing_off')
 
-    req.insertTache(1, dest_id, "Félicitations :-*, \
-        une personne vient de nous informer qu'elle crush \
-        sur vous dans la page iTeam-$ Bot Crush :-)\nhttps://web.facebook.com/iteamsbot",
-         f'{{"username_crush": "{encode(username)}" }}')
+    req.insertTache(1, dest_id, "datetime.now()\nFélicitations :-*, \
+    une personne vient de nous informer qu'elle crush \
+    sur vous dans la page iTeam-$ Bot Crush :-)\nhttps://web.facebook.com/iteamsbot\
+    \nUtilisateur: " + dest_id, f'{{"username_crush": "{encode(username)}" }}')
 
     req.setAction(dest_id, None)
 

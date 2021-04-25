@@ -11,6 +11,7 @@ from scripts.utils import *
 os.environ['ITEAMS_ACCESS_TOKEN'] = ITEAMS_ACCESS_TOKEN
 os.environ['ITEAMS_LOGIN'] = ITEAMS_LOGIN
 os.environ['ITEAMS_PASS'] = ITEAMS_PASS
+os.chdir('/home/iteams/Bot-Crush')
 
 
 def tache1(data):
