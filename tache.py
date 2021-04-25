@@ -11,6 +11,7 @@ from scripts.utils import *
 os.environ['ITEAMS_ACCESS_TOKEN'] = ITEAMS_ACCESS_TOKEN
 os.environ['ITEAMS_LOGIN'] = ITEAMS_LOGIN
 os.environ['ITEAMS_PASS'] = ITEAMS_PASS
+os.chdir('/home/iteams/Bot-Crush')
 
 
 def tache1(data):
@@ -21,6 +22,7 @@ def tache1(data):
 
     username_crush = decode(json.loads(data[-1]).get('username_crush'))
     crushId = get_user_id(username_crush, driver)
+    print(crushId)
     if not crushId:
         bot.send_action(data[2], 'mark_seen')
         bot.send_action(data[2], 'typing_on')
@@ -39,6 +41,7 @@ def tache1(data):
     except Exception as err:
         print(err)
         bot.send_message(data[2], "❌❌❌Oh, une erreur s'est produite :-/")
+        req.updateFinishJob(data[0])
         return None
     bot.send_action(data[2], 'typing_off')
 
@@ -95,7 +98,8 @@ def tache3(data):
         bot.send_message(data[2], "Veuillez saisir votre code de confirmation")
     except Exception as err:
         print(err)
-        # bot.send_message(data[2], "❌❌❌Oh, une erreur s'est produite :-/")
+        bot.send_message(data[2], "❌❌❌Oh, une erreur s'est produite :-/")
+        req.updateFinishJob(data[0])
         return
     req.updateFinishJob(data[0])
 

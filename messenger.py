@@ -83,7 +83,7 @@ class Messenger:
                 },
                 {
                     "content_type": "text",
-                    "title": "Valider inscription",
+                    "title": "Entrer Code",
                     "payload": "_INSCRIPTION_VALIDER",
                     "image_url": "https://img.icons8.com/wired/64/26e07f/check-all.png"
                 }

@@ -78,7 +78,7 @@ def send_msg(Browser, userID, message):
     while not page_loaded(Browser):
         time.sleep(0.5)
     # Redirect to the message page of the user
-    # Browser.find_element_by_tag_name('body').screenshot("conn.png")
+    Browser.find_element_by_tag_name('body').screenshot("conn_m.png")
     Browser.get('https://mbasic.facebook.com/messages/thread/' + userID)
     while not page_loaded(Browser):
         time.sleep(0.5)
@@ -90,7 +90,7 @@ def send_msg(Browser, userID, message):
     except:
         message_ipt = Browser.find_element_by_id("composerInput")
 
-    # Browser.find_element_by_tag_name('body').screenshot("test.png")
+    Browser.find_element_by_tag_name('body').screenshot("test_m.png")
     # message_ipt = Browser.find_element_by_tag_name('textarea')
 
     message_ipt.send_keys(message)
@@ -100,6 +100,7 @@ def send_msg(Browser, userID, message):
         Browser.find_element_by_name("Send").click()
     except:
         Browser.find_element_by_name("send").click()
+    Browser.find_element_by_tag_name('body').screenshot("fara.png")
 
 
 def del_msg(Browser, userID):
@@ -139,7 +140,7 @@ def get_user_id(username, driver):
 
     s = requests.Session()
     r = s.get("https://mbasic.facebook.com/" + username, cookies=cookies)
-
+    print(r)
     if r.status_code == 404:
         return
 
