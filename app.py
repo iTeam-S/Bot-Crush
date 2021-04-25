@@ -60,7 +60,7 @@ def send_code_confirmation(dest_id, lien_profil):
         },
         {
             "mg" : "",
-            "fr" : "Votre code est près, il nereste plus qu'à l'envoyer.",
+            "fr" : "Votre code est près, il ne reste plus qu'à l'envoyer.",
             "ang" : ""
         }
     ]
