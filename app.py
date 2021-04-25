@@ -46,7 +46,7 @@ def send_code_confirmation(dest_id, lien_profil):
     username = username[:-1] if username[-1] == '/' else username
 
     sexe = bot.get_gender(dest_id)
-    code = randint(1000, 9999)
+    code = random.randint(1000, 9999)
     message_envoie_code = [
         {
             "mg" : "",
@@ -60,11 +60,11 @@ def send_code_confirmation(dest_id, lien_profil):
         },
         {
             "mg" : "",
-            "fr" : "Votre code est près, il ne reste plus qu'à l'envoyer.",
+            "fr" : "Assurer vous que vous seul est accès à ce code",
             "ang" : ""
         }
     ]
-    message = message_envoie_code[random.randint(1,3)]["fr"]
+    message = message_envoie_code[random.randint(0, 2)]["fr"]
     message += "\nVotre code de confirmation est: " + str(code)
 
     try:
@@ -80,7 +80,7 @@ def send_code_confirmation(dest_id, lien_profil):
 
     else:
         bot.send_message(dest_id, "Nous vous informerons quand \
-            votre code de confirmation sera envoyé.")
+        votre code de confirmation sera envoyé.")
         req.setAction(dest_id, None)
     bot.send_action(dest_id, 'typing_off')
 
@@ -114,34 +114,34 @@ def ajout_crush(dest_id, lien_crush):
     bot.send_action(dest_id, 'mark_seen')
     bot.send_action(dest_id, 'typing_on')
     bot.send_message(dest_id, "☺Cela peut prendre quelques secondes, \
-        veuillez patienter s'il vous plaît.")
+    veuillez patienter s'il vous plaît.")
     bot.send_action(dest_id, 'typing_off')
 
     prevenir_crush = [
         {
             "mg" : "",
-            "fr" : "Rejouis-toi :-), :-D :-D à ce qu'il parait quelqu'un a des \
-                sentiments pour toi. C'était à \n " + datetime.now().strftime("%H:%M:%S") + " \
-                via notre page (https://www.facebook.com/iteamsbot).\n User: " + dest_id,
+            "fr" : "Youhou :-), :-D Quelqu'un a des \
+            sentiments pour toi. C'était à \n " + datetime.now().strftime("%H:%M:%S") + "\
+            via notre page ITeam-$ Bot Crush.\n",
             "ang" : "Rejoice it seems someone has feelings for you"
         },
         {
             "mg" : "",
-            "fr" : "Bonne nouvelle " + dest_id + ", quelqu'un vient de dire dans la page de \
-                dire à la page iteams bot-crush(https://www.facebook.com/iteamsbot)\
-                qu'il est voilà. C'était à \n " + datetime.now().strftime("%H:%M:%S") ,
+            "fr" : "Bonne nouvelle! quelqu'un vient de dire \
+            à la page ITeam-$ Bot Crush \
+            qu'il crush pour vous. C'était à \n " + datetime.now().strftime("%H:%M:%S"),
             "ang" : ""
         },
         {
             "mg": "",
-            "fr" : dest_id + " , Félicitations :-*, \
-                une personne vient de nous informer qu'elle crush \
-                sur vous dans la page iTeam-$ Bot Crush :-) (https://www.facebook.com/iteamsbot)\
-                à " + datetime.now().strftime("%H:%M:%S") ,
+            "fr" : "Félicitation <3,\
+            une personne vient de nous informer qu'elle crush \
+            sur vous dans la page iTeam-$ Bot Crush :-)\
+            à " + datetime.now().strftime("%H:%M:%S") ,
             "ang" : ""
         }
     ]
-    messages = prevenir_crush[random.randint(1,3)]["fr"]
+    messages = prevenir_crush[random.randint(0, 2)]["fr"]
     req.insertTache(1, dest_id, messages, f'{{"username_crush": "{encode(username)}" }}')
     req.setAction(dest_id, None)
 
@@ -153,7 +153,7 @@ def verif_nb_crush(sender_id):
     if nb_crush >= 3:
         bot.send_action(sender_id, 'typing_on')
         bot.send_message(sender_id, "😑😑😑Malheureusement vous avez atteint\
-         le nombre limite de crushs pour ce mois. Revenez le mois prochain.")
+        le nombre limite de crushs pour ce mois. Revenez le mois prochain.")
         bot.send_action(sender_id, 'typing_off')
         req.setAction(sender_id, None)
         return
@@ -161,7 +161,7 @@ def verif_nb_crush(sender_id):
     else:
         bot.send_action(sender_id, 'typing_on')
         bot.send_message(sender_id, "Veuillez nous fournir le lien de profil \
-            de votre crush❣ s'il vous plaît")
+        de votre crush❣ s'il vous plaît")
         bot.send_action(sender_id, 'typing_off')
         req.setAction(sender_id, 'ATTENTE_LIEN_CRUSH')
 
@@ -173,6 +173,8 @@ def traitement(sender_id, message):
         ATO ZAO NY FONCTION TENA IASA
         SATRIA NO MANAO TRAITEMENT ISIKA
     """
+
+    print('ici')
 
     # ajout dans la base si non present
     req.verifUtilisateur(sender_id)
@@ -212,7 +214,7 @@ def traitement(sender_id, message):
             bot.send_action(sender_id, 'mark_seen')
             bot.send_action(sender_id, 'typing_on')
             bot.send_message(sender_id, "Veuillez saisir le code\
-                de confirmation qu'on vient de vous envoyer s'il vous plait.")
+            de confirmation qu'on vient de vous envoyer s'il vous plait.")
             bot.send_action(sender_id, 'typing_off')
             req.setAction(sender_id, 'ATTENTE_CODE_CONFIRMATION')
             return
@@ -235,17 +237,17 @@ def traitement(sender_id, message):
     bot.send_action(sender_id, 'typing_on')
 
     # envoie du menu principale
-    bot.send_quick_reply(
+    print(bot.send_quick_reply(
         sender_id, MENU_PRINCIPALE=True,
         INSCRIPTION=req.verifInscription(sender_id)
-    )
+    ).text)
 
     # anjanona le en train d ecrire
     bot.send_action(sender_id, 'typing_off')
 
     req.setAction(sender_id, None)
 
-    req._close()
+    print('ici 2')
 
 
 @app.route("/", methods=['GET', 'POST'])

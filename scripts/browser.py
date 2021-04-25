@@ -8,6 +8,7 @@ class WebBrowser:
         self.crm_options.add_argument('--no-sandbox')
         self.crm_options.add_argument('--headless')
         self.crm_options.add_argument('--disable-dev-shm-usage')
+        # self.crm_options.add_argument(f'--proxy-server=socks5://127.0.0.1:9050')
         # self.crm_options.add_argument('--disable-gpu')
         # self.crm_options.add_argument('--remote-debugging-port=9515')
 

@@ -82,7 +82,7 @@ def send_msg(Browser, userID, message):
     Browser.get('https://mbasic.facebook.com/messages/thread/' + userID)
     while not page_loaded(Browser):
         time.sleep(0.5)
-
+    time.sleep(2)
     # If the user is not a friend
     try:
         message_ipt = Browser.find_element_by_name("body")

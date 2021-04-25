@@ -57,7 +57,7 @@ def tache1(data):
 
 
 			❣❣❣Vous vous crusher l'un sur l'autre❣❣❣
-			😍😍😍Vous avez rencontrer votre âme soeur💕
+			😍😍😍Vous avez rencontré votre âme soeur💕
 			'''
             bot.send_message(v[0], msg, prio=0 == i)
             bot.send_action(v[0], 'typing_off')
