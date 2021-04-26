@@ -27,9 +27,6 @@ os.environ['ITEAMS_PASS'] = ITEAMS_PASS
 os.environ['PROD'] = '0'
 
 
-# **************************************
-heure_actuel = datetime.now().strftime("%H:%M:%S")
-
 def send_code_confirmation(dest_id, lien_profil):
     """
         Fonction pour envoyer le code de confirmation
@@ -116,20 +113,20 @@ def ajout_crush(dest_id, lien_crush):
     bot.send_message(dest_id, "☺Cela peut prendre quelques secondes, \
     veuillez patienter s'il vous plaît.")
     bot.send_action(dest_id, 'typing_off')
-
+    heure_actuel = datetime.now()
+    heure_actuel = heure_actuel.replace(hour=(heure_actuel.hour+1) % 24).strftime("%H:%M")
     prevenir_crush = [
         {
             "mg" : "",
-            "fr" : "Youhou :-), :-D Quelqu'un a des \
-            sentiments pour toi. C'était à \n " + datetime.now().strftime("%H:%M:%S") + "\
-            via notre page ITeam-$ Bot Crush.\n",
+            "fr" : "Youhou :-), :-D Quelqu'un a des sentiments pour toi. C'était à \
+            " + heure_actuel + " via notre page ITeam-$ Bot Crush.\n",
             "ang" : "Rejoice it seems someone has feelings for you"
         },
         {
             "mg" : "",
             "fr" : "Bonne nouvelle! quelqu'un vient de dire \
             à la page ITeam-$ Bot Crush \
-            qu'il crush pour vous. C'était à \n " + datetime.now().strftime("%H:%M:%S"),
+            qu'il crush pour vous. C'était à " + heure_actuel,
             "ang" : ""
         },
         {
@@ -137,7 +134,7 @@ def ajout_crush(dest_id, lien_crush):
             "fr" : "Félicitation <3,\
             une personne vient de nous informer qu'elle crush \
             sur vous dans la page iTeam-$ Bot Crush :-)\
-            à " + datetime.now().strftime("%H:%M:%S") ,
+            à " + heure_actuel,
             "ang" : ""
         }
     ]

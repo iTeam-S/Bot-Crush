@@ -1,6 +1,19 @@
+# File for build and env
 .idea
 venv
 __pycache__/
+
+# log file
 geckodriver.log
+logfile
+
+# Configuration file
 cookies.pkl
 conf.py
+
+# Image from test
+*png
+
+# Chromedriver
+chromedriver
+
