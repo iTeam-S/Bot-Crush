@@ -88,7 +88,22 @@ class Messenger:
                     "image_url": "https://img.icons8.com/wired/64/26e07f/check-all.png"
                 }
             ]
-
+        elif kwargs.get('LIEN_PROFIL'):
+            text = 'Avez-vous accepter notre demande?'
+            quick_rep = [
+                {
+                    "content_type": "text",
+                    "title": "Oui",
+                    "payload": kwargs.get('LIEN_PROFIL'),
+                    "image_url": "https://img.icons8.com/flat_round/64/26e07f/plus.png"
+                },
+                {
+                    "content_type": "text",
+                    "title": "Non",
+                    "payload": "DEMANDE_REJETER",
+                    "image_url": "https://img.icons8.com/wired/64/26e07f/check-all.png"
+                }
+            ]
         else:
             return
 
