@@ -159,7 +159,7 @@ def ajout_crush(dest_id, lien_crush):
     # req.insertTache(1, dest_id, messages, f'{{"username_crush": "{encode(username)}" }}')
     # bot.send_quick_reply(dest_id, LIEN_PROFIL=messages)
     bot.send_quick_reply(dest_id, TEXTE_PERSONNALISER=messages, USERNAME= username)  
-    # req.setAction(dest_id, "ATTENTE_TEXTE")
+    req.setAction(dest_id, "ATTENTE_TEXTE")
 
 
 def verif_nb_crush(sender_id):
@@ -200,6 +200,18 @@ def traitement(sender_id, message):
 
     if statut == 'ATTENTE_LIEN_PROFIL':
         send_code_confirmation(sender_id, message)
+        return
+    elif statut == 'ATTENTE_TEXTE':
+        if message.startswith('__TEXTE_PERSONNALISER_'):
+            if message.startswith('_TEXTE_PERSONNALISER_NON'):
+                mes = message.split("***")
+                req.insertTache(1, sender_id , "Alors la vous ne voulez pas envoyer de \
+                de texte personnaliser alors", f'{{"username_crush": "{encode(mes[2])}" }}')
+            elif message.startswith('_TEXTE_PERSONNALISER_OUI'):
+                mes = message.split("***")
+                req.insertTache(1, sender_id , "Alors la vous voulez envoyer de \
+                de texte personnaliser alors", f'{{"username_crush": "{encode(mes[2])}" }}')
+            req.setAction(sender_id, None)
         return
 
     elif statut == 'ATTENTE_CODE_CONFIRMATION':
@@ -244,17 +256,7 @@ def traitement(sender_id, message):
     elif message.startswith('_AJOUTER'):
         verif_nb_crush(sender_id)
         return
-    elif message.startswith('__TEXTE_PERSONNALISER_'):
-        if message.startswith('_TEXTE_PERSONNALISER_NON'):
-            mes = message.split("***")
-            req.insertTache(1, sender_id , "Alors la vous ne voulez pas envoyer de \
-            de texte personnaliser alors", f'{{"username_crush": "{encode(mes[2])}" }}')
-        elif message.startswith('_TEXTE_PERSONNALISER_OUI'):
-            mes = message.split("***")
-            req.insertTache(1, sender_id , "Alors la vous voulez envoyer de \
-            de texte personnaliser alors", f'{{"username_crush": "{encode(mes[2])}" }}')
-        req.setAction(sender_id, None)
-        return
+
 
     # ataoko vue aloa le message
     bot.send_action(sender_id, 'mark_seen')

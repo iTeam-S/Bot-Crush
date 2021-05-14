@@ -49,7 +49,7 @@ class Messenger:
         header = {'content-type': 'application/json; charset=utf-8'}
         params = {"access_token": self.token}
 
-        return requests.post(self.url + '/messages', json=data_json, headers=header, params=params)
+        return requests.post(self.url + '/messages', json=data_json, headers= header, params=params)
 
     def send_quick_reply(self, dest_id, **kwargs):
         if kwargs.get('MENU_PRINCIPALE'):
