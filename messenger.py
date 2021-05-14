@@ -104,6 +104,24 @@ class Messenger:
                     "image_url": "https://img.icons8.com/wired/64/26e07f/check-all.png"
                 }
             ]
+        elif kwargs.get('TEXTE_PERSONNALISER') and kwargs.get('USERNAME') : 
+            text = "Vous voulez un texte personnalisé."
+            quick_rep = [
+                {
+                    "content_type": "text",
+                    "title": "Non",
+                    "payload": "_TEXTE_PERSONNALISER_OUI" + "***" + kwargs.get('TEXTE_PERSONNALISER') + "***" + kwargs.get('USERNAME'),
+                    "image_url": "https://img.icons8.com/flat_round/64/26e07f/plus.png"
+                },
+                {
+                    "content_type": "text",
+                    "title": "Oui",
+                    "payload": "_TEXTE_PERSONNALISER_OUI" + "***" + kwargs.get('TEXTE_PERSONNALISER')+"***"+ kwargs.get('USERNAME') ,
+                    "image_url": "https://img.icons8.com/wired/64/26e07f/check-all.png"
+                }
+            ] 
+
+
         else:
             return
 

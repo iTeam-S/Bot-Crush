@@ -4,6 +4,7 @@ from datetime import datetime
 import random
 from threading import Thread
 from datetime import datetime
+import re
 
 from conf import ITEAMS_ACCESS_TOKEN
 from conf import ITEAMS_LOGIN, ITEAMS_PASS
@@ -25,6 +26,21 @@ os.environ['ITEAMS_ACCESS_TOKEN'] = ITEAMS_ACCESS_TOKEN
 os.environ['ITEAMS_LOGIN'] = ITEAMS_LOGIN
 os.environ['ITEAMS_PASS'] = ITEAMS_PASS
 os.environ['PROD'] = '0'
+def send_add_friend (dest_id, lien_profil):
+    lien_profil = lien_profil.lower()
+
+    try:
+        bot.send_action(dest_id, 'mark_seen')
+        bot.send_action(dest_id, 'typing_on')  
+        req.insertTache(2, dest_id, None)
+
+    except Exception as err:
+        print(err)
+        bot.send_message(dest_id, "❌❌❌Oh, une erreur s'est produite :-/")
+        return        
+
+
+    
 
 
 def send_code_confirmation(dest_id, lien_profil):
@@ -140,8 +156,10 @@ def ajout_crush(dest_id, lien_crush):
     ]
     messages = prevenir_crush[random.randint(0, 2)]["fr"]
     messages += "\n Visiter la page pour connaître le fonctionnement. Merci"
-    req.insertTache(1, dest_id, messages, f'{{"username_crush": "{encode(username)}" }}')
-    req.setAction(dest_id, None)
+    # req.insertTache(1, dest_id, messages, f'{{"username_crush": "{encode(username)}" }}')
+    # bot.send_quick_reply(dest_id, LIEN_PROFIL=messages)
+    bot.send_quick_reply(dest_id, TEXTE_PERSONNALISER=messages, USERNAME= username)  
+    # req.setAction(dest_id, "ATTENTE_TEXTE")
 
 
 def verif_nb_crush(sender_id):
@@ -195,7 +213,6 @@ def traitement(sender_id, message):
 
     # on enleve les espaces du devant et du derriere si present
     message = message.strip()
-
     if message.startswith('_INSCRIPTION'):
         # ENTRANT DANS LE MENU INSCRIPTION
 
@@ -226,6 +243,17 @@ def traitement(sender_id, message):
 
     elif message.startswith('_AJOUTER'):
         verif_nb_crush(sender_id)
+        return
+    elif message.startswith('__TEXTE_PERSONNALISER_'):
+        if message.startswith('_TEXTE_PERSONNALISER_NON'):
+            mes = message.split("***")
+            req.insertTache(1, sender_id , "Alors la vous ne voulez pas envoyer de \
+            de texte personnaliser alors", f'{{"username_crush": "{encode(mes[2])}" }}')
+        elif message.startswith('_TEXTE_PERSONNALISER_OUI'):
+            mes = message.split("***")
+            req.insertTache(1, sender_id , "Alors la vous voulez envoyer de \
+            de texte personnaliser alors", f'{{"username_crush": "{encode(mes[2])}" }}')
+        req.setAction(sender_id, None)
         return
 
     # ataoko vue aloa le message
