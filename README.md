@@ -21,7 +21,8 @@ Et si la magie de Cupidon 💘vous souris (que votre crush a le même sentiment 
 [![forthebadge](https://forthebadge.com/images/badges/open-source.svg)](https://forthebadge.com)
 
 <h3>CONTRIBUTEURS du projet Bot Crush</h3>
-    
+
+![Image des contributeurs GitHub](https://contrib.rocks/image?repo=iTeam-S/Bot-Crush)
 | Nom       | Niveau | Poste        | Profil Github                                             |
 | --------- | ------ | ------------ | ----------------------------------------------------------|
 | Gaetan    | L3     | **-+-+-+-** | [Gaetan Jonathan BAKARY](https://github.com/gaetan1903)   |
