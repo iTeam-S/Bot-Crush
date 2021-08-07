@@ -1,4 +1,7 @@
 # `BOT CRUSH`
+
+[![Not Maintained](https://img.shields.io/badge/Maintenance%20Level-Not%20Maintained-yellow.svg)](https://gist.github.com/cheerfulstoic/d107229326a01ff0f333a1d3476e068d)
+
 <table>
 <tr><td>Voilà que notre "Bot 🤖 Crush 🥰" débarque pour vous.
 Ce bot messenger va vous servir d'intermédiaire entre vous et votre crush📩 tout en gardant votre identité secrète (même l'administrateur ne saura votre identité puisque les messages seront effacés automatiquement côté Admin 😱😎) 🤐
